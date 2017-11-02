@@ -19,7 +19,11 @@ namespace ConsoleTesting
             eventDispatcher.RegisterHandlers(typeof(IEventManagementContext).Assembly);
             var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
 
-            var concert = new Concert(new EventDescription("the eminem show", DateTime.Now.AddDays(24)));
+            var concert = new Concert(
+                new EventId(Guid.NewGuid().ToString()),
+                new EventDescription("the eminem show", DateTime.Now.AddDays(24))
+                );
+
             concert.AssignOrganizer("mp");
             concert.ChangeConcertName("new name1");
 
@@ -37,7 +41,8 @@ namespace ConsoleTesting
             var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
         }
 
-        public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes) where T : IEventSourcedAggregaterRoot
+        public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes) 
+            where T : IEventSourcedAggregaterRoot
         {
             T root = (T)Activator.CreateInstance(typeof(T), true);
             root.Apply(changes.Select(x => x.Data).ToList());

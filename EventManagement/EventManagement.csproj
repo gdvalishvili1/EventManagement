@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <Folder Include="CommanHandlers\" />
+    <Folder Include="Interfaces\" />
   </ItemGroup>
 
   <ItemGroup>

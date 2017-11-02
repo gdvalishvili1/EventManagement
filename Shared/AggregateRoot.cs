@@ -8,22 +8,24 @@ namespace Shared
     public abstract class AggregateRoot<TId> : IEventSourcedAggregaterRoot
     {
         private readonly Dictionary<Type, Action<DomainEvent>> _registeredEvents;
+        private readonly List<DomainEvent> _changes = new List<DomainEvent>();
+        public TId Id { get; protected set; }
         public AggregateRoot()
         {
             _registeredEvents = new Dictionary<Type, Action<DomainEvent>>();
         }
-        private List<DomainEvent> _changes { get; set; } = new List<DomainEvent>();
-        public TId Id { get; protected set; }
 
-        protected void Emit(DomainEvent evnt)
+        protected void ApplyChange(DomainEvent change)
         {
-            _changes.Add(evnt);
+            _changes.Add(change);
+            (this as IEventSourcedAggregaterRoot).Apply(change);
         }
 
-        List<DomainEvent> IEventSourcedAggregaterRoot.Changes()
+        IEnumerable<DomainEvent> IEventSourcedAggregaterRoot.UncommittedChanges()
         {
             return _changes;
         }
+
         void IEventSourcedAggregaterRoot.Apply(List<DomainEvent> changes)
         {
             changes.ForEach(change => (this as IEventSourcedAggregaterRoot).Apply(change));
@@ -34,16 +36,24 @@ namespace Shared
             var whenMethod = GetType()
             .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
             .Where(m => m.Name.Equals("On"))
-            .Where(m => m.GetParameters().SingleOrDefault(p => p.ParameterType.FullName.Equals(change.GetType().FullName)) != null);
+            .Where(m => m.GetParameters()
+            .SingleOrDefault(p => p.ParameterType.FullName.Equals(change.GetType().FullName)) != null);
+
             whenMethod.Single().Invoke(this, new object[] { change });
+        }
+
+        public void MarkChangesAsCommitted()
+        {
+            _changes.Clear();
         }
     }
 
     public interface IEventSourcedAggregaterRoot
     {
-        List<DomainEvent> Changes();
+        IEnumerable<DomainEvent> UncommittedChanges();
         void Apply(List<DomainEvent> changes);
         void Apply(DomainEvent change);
+        void MarkChangesAsCommitted();
     }
 
     public interface IStoreAggregateRootChanges

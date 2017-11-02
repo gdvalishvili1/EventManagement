@@ -1,11 +1,8 @@
-﻿using EventManagement.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
 
 namespace EventManagement.ValueObjects
 {
-    public class EventDescription : IEventDescription
+    public class EventDescription
     {
         public EventDescription(string name, DateTime eventDate)
         {
@@ -25,11 +22,11 @@ namespace EventManagement.ValueObjects
         public DateTime EventDate { get; private set; }
         public string Description { get; private set; }
 
-        public IEventDescription Rename(string newName)
+        public EventDescription Rename(string newName)
         {
             return new EventDescription(newName, EventDate);
         }
-        public IEventDescription ChangeDate(DateTime newDate)
+        public EventDescription ChangeDate(DateTime newDate)
         {
             return new EventDescription(Name, newDate);
         }

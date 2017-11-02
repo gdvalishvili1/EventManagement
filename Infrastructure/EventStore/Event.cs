@@ -1,7 +1,7 @@
 ﻿using Shared;
 using System;
 
-namespace EventManagement.Infrastructure.EventStore
+namespace Infrastructure.EventStore
 {
     public class Event
     {

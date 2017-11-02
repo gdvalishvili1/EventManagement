@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace EventManagement.Infrastructure.EventDispatching
+namespace Infrastructure.EventDispatching
 {
     public interface IHandle<in T> where T : DomainEvent
     {

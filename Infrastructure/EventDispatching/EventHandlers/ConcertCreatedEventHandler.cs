@@ -1,6 +1,6 @@
 ﻿using EventManagement.EventHandlers;
 using EventManagement.Events;
-using EventManagement.Infrastructure.EventDispatching;
+using Infrastructure.EventDispatching;
 
 namespace Infrastructure.EventDispatching.EventDispatchers
 {

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement", "EventManagement\EventManagement.csproj", "{A71CC071-26F7-4AEE-8667-CC272E836207}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "EventManagement.Infrastructure\Infrastructure.csproj", "{F66C769C-DC31-4FB1-AB91-B757A1BF3255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F66C769C-DC31-4FB1-AB91-B757A1BF3255}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{89D572F2-8444-47D1-9A07-C937DC657BC2}"
 EndProject

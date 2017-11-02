@@ -18,17 +18,17 @@ namespace ConsoleTesting
             eventDispatcher.RegisterHandlers(typeof(DomainEvent).Assembly);
             var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
 
-            var concert = new Concert(new EventDescription("joni", DateTime.Now.AddDays(24)));
-            concert.AssignOrganizer("jimi");
-            concert.ChangeConcertName("axali saxeliaaa");
+            var concert = new Concert(new EventDescription("the eminem show", DateTime.Now.AddDays(24)));
+            concert.AssignOrganizer("mp");
+            concert.ChangeConcertName("new name1");
 
             new StoreAggregateRootChanges(concert, inMemoryEventStore).StoreChanges();
 
             var priviousEvents = inMemoryEventStore.ChangesFor(concert.Id.ToString());
             var appliedConcert = AggregateById<Concert>(concert.Id.ToString(), priviousEvents.ToList());
 
-            appliedConcert.AssignOrganizer("1222");
-            appliedConcert.ChangeConcertName("23232");
+            appliedConcert.AssignOrganizer("name1");
+            appliedConcert.ChangeConcertName("name2");
 
             new StoreAggregateRootChanges(appliedConcert, inMemoryEventStore).StoreChanges();
 

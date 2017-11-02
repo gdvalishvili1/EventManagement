@@ -1,9 +1,9 @@
-﻿using Domain.AggregateBase;
-using EventManagement;
+﻿using EventManagement;
 using EventManagement.Infrastructure.EventDispatching;
 using EventManagement.Infrastructure.EventSourcedAggregateRoot;
 using EventManagement.Infrastructure.EventStore;
-using Events;
+using Messages;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;

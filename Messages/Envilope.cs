@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Events
+namespace Messages
 {
     public class Envilope
     {

@@ -1,5 +1,5 @@
-﻿using Domain.AggregateBase;
-using Events.EventManagement;
+﻿using Messages.Events.EventManagement;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;

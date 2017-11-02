@@ -5,10 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Commands\Commands.csproj" />
-    <ProjectReference Include="..\Domain\Common.csproj" />
     <ProjectReference Include="..\EventManagement\EventManagement.csproj" />
-    <ProjectReference Include="..\Events\Events.csproj" />
   </ItemGroup>
 
 </Project>

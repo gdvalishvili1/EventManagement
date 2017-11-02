@@ -1,6 +1,6 @@
 ﻿using EventManagement.EventHandlers;
 using EventManagement.Infrastructure.EventDispatching;
-using Events.EventManagement;
+using Messages.Events.EventManagement;
 using System;
 using System.Collections.Generic;
 using System.Text;

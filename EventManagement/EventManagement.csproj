@@ -8,11 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\Common.csproj" />
+    <Folder Include="CommanHandlers\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CommanHandlers\" />
+    <ProjectReference Include="..\Messages\Messages.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
   </ItemGroup>
 
 </Project>

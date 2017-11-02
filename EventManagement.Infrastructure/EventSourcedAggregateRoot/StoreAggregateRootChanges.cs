@@ -1,6 +1,6 @@
-﻿using Domain.AggregateBase;
-using EventManagement.Infrastructure.EventStore;
-using Events;
+﻿using EventManagement.Infrastructure.EventStore;
+using Messages;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;

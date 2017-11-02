@@ -1,8 +1,8 @@
-﻿using Infrastructure.EventStore;
+﻿using EventManagement.Infrastructure.EventStore;
 using Shared;
 using System.Collections.Generic;
 
-namespace Infrastructure.EventSourcedAggregateRoot
+namespace EventManagement.Infrastructure.EventSourcedAggregateRoot
 {
     public class StoreAggregateRootChanges : IStoreAggregateRootChanges
     {

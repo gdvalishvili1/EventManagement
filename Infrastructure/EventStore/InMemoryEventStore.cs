@@ -1,9 +1,9 @@
-﻿using Infrastructure.EventDispatching;
+﻿using EventManagement.Infrastructure.EventDispatching;
 using Shared;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Infrastructure.EventStore
+namespace EventManagement.Infrastructure.EventStore
 {
     public class InMemoryEventStore : IEventStore
     {

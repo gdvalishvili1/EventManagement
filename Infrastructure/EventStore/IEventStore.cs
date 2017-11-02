@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Infrastructure.EventStore
+namespace EventManagement.Infrastructure.EventStore
 {
     public interface IEventStore
     {

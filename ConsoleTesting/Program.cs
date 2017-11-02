@@ -7,6 +7,7 @@ using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using EventManagement;
 
 namespace ConsoleTesting
 {
@@ -15,7 +16,7 @@ namespace ConsoleTesting
         static void Main(string[] args)
         {
             var eventDispatcher = new EventDispatcher<DomainEvent>();
-            eventDispatcher.RegisterHandlers(typeof(DomainEvent).Assembly);
+            eventDispatcher.RegisterHandlers(typeof(IEventManagementContext).Assembly);
             var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
 
             var concert = new Concert(new EventDescription("the eminem show", DateTime.Now.AddDays(24)));

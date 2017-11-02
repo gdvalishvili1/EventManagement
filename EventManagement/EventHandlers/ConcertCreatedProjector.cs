@@ -3,9 +3,9 @@ using System;
 
 namespace EventManagement.EventHandlers
 {
-    public class ConcertCreatedEventHandler
+    public class ConcertCreatedProjector
     {
-        public void Handle(ConcertCreated @event)
+        public void Project(ConcertCreated @event)
         {
             Console.WriteLine($"concert registered {@event.Name}");
         }

@@ -15,7 +15,7 @@ namespace ConsoleTesting
         static void Main(string[] args)
         {
             var eventDispatcher = new EventDispatcher<DomainEvent>();
-            eventDispatcher.RegisterHandlers(typeof(EventDispatcher).Assembly);
+            eventDispatcher.RegisterHandlers(typeof(DomainEvent).Assembly);
             var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
 
             var concert = new Concert(new EventDescription("joni", DateTime.Now.AddDays(24)));

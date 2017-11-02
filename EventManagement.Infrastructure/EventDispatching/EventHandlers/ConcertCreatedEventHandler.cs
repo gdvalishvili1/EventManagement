@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Infrastructure.EventDispatching.EventDispatchers
 {
-    public class ConcertCreatedEventDispatcher : IHandle<ConcertCreated>
+    public class ConcertCreatedEventHandler : IHandle<ConcertCreated>
     {
         public void Handle(ConcertCreated @event)
         {
-            new ConcertCreatedEventHandler().Handle(@event);
+            new ConcertCreatedProjector().Project(@event);
         }
     }
 }

@@ -18,16 +18,16 @@ namespace EventManagement.Infrastructure.EventDispatching
         public EventDispatcher() { }
         public void RegisterHandlers(Assembly assembly)
         {
-            var assemblyTypes = assembly.GetTypes();
+            var domainEventTypes = assembly.GetTypes();
 
-            var domainEvents = assemblyTypes
+            var domainEvents = domainEventTypes
                 .Where(at => typeof(DomainEvent).IsAssignableFrom(at)
                  && at.IsClass && !at.IsAbstract && !at.IsInterface);
 
             foreach (var domainEvent in domainEvents)
             {
                 eventhandlerMaps[domainEvent] = new List<Type>();
-                foreach (var assemblyType in assemblyTypes)
+                foreach (var assemblyType in GetType().Assembly.GetTypes())
                 {
                     var eventHandlers = assemblyType.GetInterfaces()
                         .FirstOrDefault(i => i.IsGenericType && i.GetGenericTypeDefinition() == typeof(IHandle<>));

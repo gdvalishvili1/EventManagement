@@ -1,7 +1,5 @@
-﻿using Messages;
+﻿using Shared;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventManagement.Infrastructure.EventStore
 {
@@ -9,9 +7,9 @@ namespace EventManagement.Infrastructure.EventStore
     {
         public Event(DomainEvent evnt)
         {
-            AggregateRootId = evnt.EventMetadata.AggregateRootId;
-            Date = evnt.EventMetadata.Date;
-            EventName = evnt.EventMetadata.EventType;
+            AggregateRootId = evnt.Envilope.AggregateRootId;
+            Date = evnt.Envilope.Date;
+            EventName = evnt.Envilope.EventType;
             Data = evnt;
         }
         public string AggregateRootId { get; }

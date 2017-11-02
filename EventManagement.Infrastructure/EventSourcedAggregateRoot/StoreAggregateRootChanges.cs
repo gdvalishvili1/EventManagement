@@ -1,9 +1,6 @@
 ﻿using EventManagement.Infrastructure.EventStore;
-using Messages;
 using Shared;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace EventManagement.Infrastructure.EventSourcedAggregateRoot
 {
@@ -22,7 +19,7 @@ namespace EventManagement.Infrastructure.EventSourcedAggregateRoot
 
         public void StoreChanges()
         {
-            _root.Changes().ForEach(evnt => _eventStore.Store(new Event(evnt)));
+            _root.Changes().ForEach(evnt => _eventStore.Store(new EventStore.Event(evnt)));
         }
     }
 }

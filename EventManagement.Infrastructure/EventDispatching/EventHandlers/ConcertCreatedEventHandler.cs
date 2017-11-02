@@ -1,9 +1,6 @@
 ﻿using EventManagement.EventHandlers;
+using EventManagement.Events;
 using EventManagement.Infrastructure.EventDispatching;
-using Messages.Events.EventManagement;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Infrastructure.EventDispatching.EventDispatchers
 {

@@ -1,4 +1,4 @@
-﻿using Messages.Events.EventManagement;
+﻿using EventManagement.Events;
 using System;
 
 namespace EventManagement.EventHandlers

@@ -2,15 +2,15 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Messages
+namespace Shared
 {
     public abstract class DomainEvent
     {
         public DomainEvent(string aggregateRootId, DateTime date)
         {
-            EventMetadata = new Envilope(aggregateRootId, date);
+            Envilope = new Envilope(aggregateRootId, date);
         }
-        public Envilope EventMetadata { get; }
+        public Envilope Envilope { get; }
     }
 }
 

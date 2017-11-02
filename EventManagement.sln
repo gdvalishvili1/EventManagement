@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement", "OrderMan
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTesting", "ConsoleTesting\ConsoleTesting.csproj", "{40E2F1AF-7555-487F-8C47-253C91D125E7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Messages", "Messages\Messages.csproj", "{E558BAFF-9BD2-4D32-B0A8-0C85AECBF1A7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{06A78021-0C32-4178-82DF-27832169991C}"
 EndProject
 Global
@@ -39,10 +37,6 @@ Global
 		{40E2F1AF-7555-487F-8C47-253C91D125E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{40E2F1AF-7555-487F-8C47-253C91D125E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{40E2F1AF-7555-487F-8C47-253C91D125E7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E558BAFF-9BD2-4D32-B0A8-0C85AECBF1A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E558BAFF-9BD2-4D32-B0A8-0C85AECBF1A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E558BAFF-9BD2-4D32-B0A8-0C85AECBF1A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E558BAFF-9BD2-4D32-B0A8-0C85AECBF1A7}.Release|Any CPU.Build.0 = Release|Any CPU
 		{06A78021-0C32-4178-82DF-27832169991C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{06A78021-0C32-4178-82DF-27832169991C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06A78021-0C32-4178-82DF-27832169991C}.Release|Any CPU.ActiveCfg = Release|Any CPU

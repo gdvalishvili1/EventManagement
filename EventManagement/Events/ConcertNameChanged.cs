@@ -1,9 +1,7 @@
-﻿using Messages;
+﻿using Shared;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Messages.Events.EventManagement
+namespace EventManagement.Events
 {
     public class ConcertNameChanged : DomainEvent
     {

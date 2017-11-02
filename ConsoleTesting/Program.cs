@@ -1,8 +1,8 @@
-﻿using EventManagement;
+﻿using EventManagement.Entities;
 using EventManagement.Infrastructure.EventDispatching;
 using EventManagement.Infrastructure.EventSourcedAggregateRoot;
 using EventManagement.Infrastructure.EventStore;
-using Messages;
+using EventManagement.ValueObjects;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace ConsoleTesting
             var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
         }
 
-        public static T AggregateById<T>(string id, List<Event> changes) where T : IEventSourcedAggregaterRoot
+        public static T AggregateById<T>(string id, List<EventManagement.Infrastructure.EventStore.Event> changes) where T : IEventSourcedAggregaterRoot
         {
             T root = (T)Activator.CreateInstance(typeof(T), true);
             root.Apply(changes.Select(x => x.Data).ToList());

@@ -1,9 +1,7 @@
 ﻿using EventManagement.Infrastructure.EventDispatching;
-using Messages;
-using System;
+using Shared;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace EventManagement.Infrastructure.EventStore
 {

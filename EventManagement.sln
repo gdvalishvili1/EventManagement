@@ -3,23 +3,17 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement", "src\EventManagement\EventManagement.csproj", "{A71CC071-26F7-4AEE-8667-CC272E836207}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement", "EventManagement\EventManagement.csproj", "{A71CC071-26F7-4AEE-8667-CC272E836207}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "src\Infrastructure\Infrastructure.csproj", "{F66C769C-DC31-4FB1-AB91-B757A1BF3255}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Infrastructure", "Infrastructure\Infrastructure.csproj", "{F66C769C-DC31-4FB1-AB91-B757A1BF3255}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "src\Domain", "{89D572F2-8444-47D1-9A07-C937DC657BC2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{89D572F2-8444-47D1-9A07-C937DC657BC2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement", "src\OrderManagement\OrderManagement.csproj", "{0BEAA21A-E966-40EE-9264-14D3D4259BE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement", "OrderManagement\OrderManagement.csproj", "{0BEAA21A-E966-40EE-9264-14D3D4259BE4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTesting", "src\ConsoleTesting\ConsoleTesting.csproj", "{40E2F1AF-7555-487F-8C47-253C91D125E7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleTesting", "ConsoleTesting\ConsoleTesting.csproj", "{40E2F1AF-7555-487F-8C47-253C91D125E7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "src\Shared\Shared.csproj", "{06A78021-0C32-4178-82DF-27832169991C}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CAD6373B-E2FC-4C04-B4E4-776FB2014B5A}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{FF872B3A-9045-4E0C-9A9C-149DAF620C9B}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{A749CF06-E636-41C9-BCF7-2670A254E80D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{06A78021-0C32-4178-82DF-27832169991C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,10 +47,7 @@ Global
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A71CC071-26F7-4AEE-8667-CC272E836207} = {89D572F2-8444-47D1-9A07-C937DC657BC2}
-		{F66C769C-DC31-4FB1-AB91-B757A1BF3255} = {CAD6373B-E2FC-4C04-B4E4-776FB2014B5A}
-		{89D572F2-8444-47D1-9A07-C937DC657BC2} = {CAD6373B-E2FC-4C04-B4E4-776FB2014B5A}
 		{0BEAA21A-E966-40EE-9264-14D3D4259BE4} = {89D572F2-8444-47D1-9A07-C937DC657BC2}
-		{40E2F1AF-7555-487F-8C47-253C91D125E7} = {CAD6373B-E2FC-4C04-B4E4-776FB2014B5A}
 		{06A78021-0C32-4178-82DF-27832169991C} = {89D572F2-8444-47D1-9A07-C937DC657BC2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution

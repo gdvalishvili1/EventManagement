@@ -6,10 +6,10 @@ namespace Infrastructure.EventSourcedAggregateRoot
 {
     public class StoreAggregateRootChanges : IStoreAggregateRootChanges
     {
-        IEventSourcedAggregaterRoot _root;
+        IEventSourcedAggregateRoot _root;
         IEventStore _eventStore;
 
-        public StoreAggregateRootChanges(IEventSourcedAggregaterRoot root, IEventStore eventStore)
+        public StoreAggregateRootChanges(IEventSourcedAggregateRoot root, IEventStore eventStore)
         {
             _root = root;
             _eventStore = eventStore;

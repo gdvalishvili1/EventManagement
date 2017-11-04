@@ -10,7 +10,7 @@ namespace EventManagement.ValueObjects
         {
             this.Value = id == null ? Guid.NewGuid() : Guid.Parse(id);
         }
-        private Guid Value { get; set; }
+        protected Guid Value { get; set; }
         public override string ToString()
         {
             return Value.ToString();

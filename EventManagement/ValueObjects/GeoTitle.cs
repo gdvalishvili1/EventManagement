@@ -6,7 +6,7 @@ namespace EventManagement.ValueObjects
 {
     public class GeoTitle : Title
     {
-        public GeoTitle(string title) : base(title)
+        public GeoTitle(string value) : base(value)
         {
         }
     }

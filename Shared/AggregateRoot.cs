@@ -4,7 +4,10 @@ using System.Text;
 
 namespace Shared
 {
-    public abstract class AggregateRoot<TId> : IEntity<TId>
+    public interface IAggregateRoot
+    { }
+
+    public abstract class AggregateRoot<TId> : IEntity<TId>, IAggregateRoot
     {
         public TId Id { get; protected set; }
     }

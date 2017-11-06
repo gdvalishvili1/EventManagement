@@ -14,8 +14,8 @@ namespace EventManagement.ValueObjects
             EventDate = eventDate;
             Description = description;
         }
-        public DateTime EventDate { get; private set; }
-        public string Description { get; private set; }
+        private DateTime EventDate { get; set; }
+        private string Description { get; set; }
 
         public EventDescription ChangeDate(DateTime newDate)
         {

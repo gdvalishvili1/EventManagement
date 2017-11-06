@@ -5,17 +5,17 @@ namespace EventManagement.Entities
 {
     public abstract class Event : AggregateRoot<EventId>
     {
-        protected EventDescription _eventDescription { get; set; }
+        protected EventDescription EventDescription { get; set; }
 
-        protected EventTitleSummary _eventTitle { get; set; }
+        protected EventTitleSummary EventTitle { get; set; }
         public Event()
         {
 
         }
         public Event(EventId eventId, EventDescription eventDescription, EventTitleSummary title)
         {
-            _eventDescription = eventDescription;
-            _eventTitle = title;
+            EventDescription = eventDescription;
+            EventTitle = title;
             Id = eventId;
         }
     }

@@ -1,5 +1,6 @@
 ﻿using EventManagement.Events;
 using EventManagement.ValueObjects;
+using Newtonsoft.Json;
 using Shared;
 using System;
 
@@ -26,36 +27,41 @@ namespace EventManagement.Entities
             TitleEng = titleEng;
         }
 
-        public static ConcertSnapshot CreateFrom(Concert concert)
-        {
-            IProvideEntitySnapshot<ConcertSnapshot> snapshotProvider = concert;
-            var concertSnapshot = snapshotProvider.Snapshot();
-            return concertSnapshot;
-        }
+        //public static ConcertSnapshot CreateFrom(Concert concert)
+        //{
+        //    IProvideEntitySnapshot<ConcertSnapshot> snapshotProvider = concert;
+        //    var concertSnapshot = snapshotProvider.Snapshot();
+        //    return concertSnapshot;
+        //}
     }
 
-    public class Concert : Event,
-        IProvideEntitySnapshot<ConcertSnapshot>
+    public class Concert : AggregateRoot<EventId>
     {
-        private string _organizer;
+        private EventDescription EventDescription { get; set; }
+        private EventTitleSummary EventTitle { get; set; }
+        private string Organizer { get; set; }
+        private Concert() : base()
+        {
 
-        private Concert()
-            : base() { }
+        }
 
         public Concert(EventId id,
-            EventTitleSummary title,
+            EventTitleSummary eventTitle,
             EventDescription eventDescription)
-            : base(id, eventDescription, title)
         {
-            if (id == null)
-                throw new ArgumentNullException(nameof(id));
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
+            EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
+        }
 
-            if (title == null)
-                throw new ArgumentNullException(nameof(title));
-
-            if (eventDescription == null)
-                throw new ArgumentNullException(nameof(eventDescription));
-
+        [JsonConstructor]
+        private Concert(EventId id,
+            EventTitleSummary eventTitle,
+            EventDescription eventDescription,
+            string organizer) :
+            this(id, eventTitle, eventDescription)
+        {
+            Organizer = organizer;
         }
 
         public static Concert CreateFrom(ConcertSnapshot snapshot)
@@ -71,18 +77,18 @@ namespace EventManagement.Entities
             if (string.IsNullOrEmpty(organizer))
                 throw new ArgumentException(nameof(organizer));
 
-            _organizer = organizer;
+            Organizer = organizer;
         }
 
         public void ChangeConcertTitle(EventTitleSummary newTitle)
         {
-            _eventTitle = newTitle;
+            EventTitle = newTitle;
         }
 
-        ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
-        {
-            return new ConcertSnapshot(_eventDescription.EventDate, _organizer,
-                _eventDescription.Description, _eventTitle.GeoTitle(), _eventTitle.EngTitle());
-        }
+        //ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
+        //{
+        //    return new ConcertSnapshot(EventDescription.EventDate, Organizer,
+        //        EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
+        //}
     }
 }

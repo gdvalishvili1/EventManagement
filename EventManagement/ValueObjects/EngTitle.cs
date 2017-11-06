@@ -6,7 +6,7 @@ namespace EventManagement.ValueObjects
 {
     public class EngTitle : Title
     {
-        public EngTitle(string title) : base(title)
+        public EngTitle(string value) : base(value)
         {
 
         }

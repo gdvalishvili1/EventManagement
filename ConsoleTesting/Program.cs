@@ -11,22 +11,11 @@ using EventManagement;
 using Newtonsoft.Json;
 using System.Reflection;
 using Newtonsoft.Json.Serialization;
+using Infrastructure;
 
 namespace ConsoleTesting
 {
-    public class JsonPrivateFieldsContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
-    {
-        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-        {
-            var props = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                            .Select(p => base.CreateProperty(p, memberSerialization))
-                        .Union(type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                                   .Select(f => base.CreateProperty(f, memberSerialization)))
-                        .ToList();
-            props.ForEach(p => { p.Writable = true; p.Readable = true; });
-            return props;
-        }
-    }
+
     class Program
     {
         static void Main(string[] args)
@@ -70,30 +59,22 @@ namespace ConsoleTesting
 
             concert.AssignOrganizer("john");
 
-            var str = AsJson(concert);
-            var obj = FromJson<Concert>(str);
+            var concerts = new ConcertRepository(new JsonParser<Concert>(), new RepositoryStorageOptions("event_tbl"));
+            concerts.Insert(concert);
+
+            var newconcert = concerts.ById(concert.Id.ToString());
+            newconcert.ChangeConcertTitle(new EventTitleSummary(new GeoTitle("geo title2")));
+
+            concerts.Update(newconcert);
+
+            var new3 = concerts.ById(concert.Id.ToString());
+
+            new3.AssignOrganizer("sxva");
+
+            concerts.Update(new3);
         }
 
-        public static string AsJson<T>(T aggregateRoot) where T : IAggregateRoot
-        {
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new JsonPrivateFieldsContractResolver(),
-                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
-            };
-            var c = JsonConvert.SerializeObject(aggregateRoot, settings);
-            return c;
-        }
 
-        public static T FromJson<T>(string json) where T : IAggregateRoot
-        {
-            var settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto,
-            };
-            var root = JsonConvert.DeserializeObject<T>(json, settings);
-            return root;
-        }
 
         public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
             where T : IEventSourcedAggregateRoot

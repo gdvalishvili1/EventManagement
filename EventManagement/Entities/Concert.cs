@@ -27,19 +27,27 @@ namespace EventManagement.Entities
             TitleEng = titleEng;
         }
 
-        //public static ConcertSnapshot CreateFrom(Concert concert)
-        //{
-        //    IProvideEntitySnapshot<ConcertSnapshot> snapshotProvider = concert;
-        //    var concertSnapshot = snapshotProvider.Snapshot();
-        //    return concertSnapshot;
-        //}
+        public static ConcertSnapshot CreateFrom(Concert concert)
+        {
+            IProvideEntitySnapshot<ConcertSnapshot> snapshotProvider = concert;
+            var concertSnapshot = snapshotProvider.Snapshot();
+            return concertSnapshot;
+        }
     }
 
-    public class Concert : AggregateRoot<EventId>
+    public class Company
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+    }
+
+    public class Concert : AggregateRoot, IProvideEntitySnapshot<ConcertSnapshot>
     {
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
         private string Organizer { get; set; }
+        public int CompanynId { get; set; }
+
         private Concert() : base()
         {
 
@@ -75,7 +83,9 @@ namespace EventManagement.Entities
         public void AssignOrganizer(string organizer)
         {
             if (string.IsNullOrEmpty(organizer))
+            {
                 throw new ArgumentException(nameof(organizer));
+            }
 
             Organizer = organizer;
         }
@@ -85,10 +95,9 @@ namespace EventManagement.Entities
             EventTitle = newTitle;
         }
 
-        //ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
-        //{
-        //    return new ConcertSnapshot(EventDescription.EventDate, Organizer,
-        //        EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
-        //}
+        ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
+        {
+            return new ConcertSnapshot(DateTime.Now, null, null, null, null);
+        }
     }
 }

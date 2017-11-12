@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Shared
 {
-    public abstract class EventSourcedAggregateRoot<TId> : IEventSourcedAggregateRoot, IEntity<TId>
+    public abstract class EventSourcedAggregateRoot<TId> : IEventSourcedAggregateRoot, IEntity
     {
         private readonly Dictionary<Type, Action<DomainEvent>> _registeredEvents;
         private readonly List<DomainEvent> _changes = new List<DomainEvent>();

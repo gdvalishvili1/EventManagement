@@ -3,7 +3,7 @@ using Shared;
 
 namespace EventManagement.Entities
 {
-    public abstract class Event : AggregateRoot<EventId>
+    public abstract class Event : AggregateRoot
     {
         protected EventDescription EventDescription { get; set; }
 

@@ -4,8 +4,8 @@ using System.Text;
 
 namespace Shared
 {
-    public interface IEntity<TId>
+    public interface IEntity
     {
-        TId Id { get; }
+        
     }
 }

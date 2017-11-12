@@ -35,25 +35,18 @@ namespace EventManagement.Entities
         }
     }
 
-    public class Company
-    {
-        public int Id { get; set; }
-        public string Name { get; set; }
-    }
-
     public class Concert : AggregateRoot, IProvideEntitySnapshot<ConcertSnapshot>
     {
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
         private string Organizer { get; set; }
-        public int CompanynId { get; set; }
 
         private Concert() : base()
         {
 
         }
 
-        public Concert(EventId id,
+        internal Concert(EventId id,
             EventTitleSummary eventTitle,
             EventDescription eventDescription)
         {
@@ -90,9 +83,9 @@ namespace EventManagement.Entities
             Organizer = organizer;
         }
 
-        public void ChangeConcertTitle(EventTitleSummary newTitle)
+        public void ChangeConcertTitle(string newGeoTitle, string newEngTitle)
         {
-            EventTitle = newTitle;
+            EventTitle = new EventTitleSummary(new GeoTitle(newGeoTitle)).WithAnotherTitle(new EngTitle(newEngTitle));
         }
 
         ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()

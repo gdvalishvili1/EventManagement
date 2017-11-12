@@ -10,25 +10,29 @@ namespace Shared
     }
     public interface IVersionedAggregateRoot
     {
-        int Version { get; }
+        int Version();
         void IncrementVersion();
         void SetVersion(int version);
     }
 
     public abstract class AggregateRoot : IEntity, IVersionedAggregateRoot
     {
+        private int _version;
         public Identity Id { get; protected set; }
 
-        public int Version { get; protected set; }
-
-        public void IncrementVersion()
+        int IVersionedAggregateRoot.Version()
         {
-            Version++;
+            return _version;
         }
 
-        public void SetVersion(int version)
+        void IVersionedAggregateRoot.IncrementVersion()
         {
-            Version = version;
+            _version++;
+        }
+
+        void IVersionedAggregateRoot.SetVersion(int version)
+        {
+            _version = version;
         }
     }
 }

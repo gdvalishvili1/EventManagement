@@ -2,7 +2,7 @@
 
 namespace EventManagement.ValueObjects
 {
-    public class EventDescription
+    internal class EventDescription
     {
         public EventDescription(DateTime eventDate, string description)
         {

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EventManagement.ValueObjects
 {
-    public class EventTitleSummary
+    internal class EventTitleSummary
     {
         private IList<Title> Titles { get; set; }
         public EventTitleSummary(Title title)

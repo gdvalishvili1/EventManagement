@@ -12,6 +12,7 @@ using Newtonsoft.Json;
 using System.Reflection;
 using Newtonsoft.Json.Serialization;
 using Infrastructure;
+using EventManagement.Factories;
 
 namespace ConsoleTesting
 {
@@ -51,19 +52,15 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
-            var concert = new Concert(
-                new EventId(Guid.NewGuid().ToString()),
-                new EventTitleSummary(new GeoTitle("Geo Title")).WithAnotherTitle(new EngTitle("Eng Title")),
-                new EventDescription(DateTime.Now.AddDays(15), "Description")
-                );
+            Concert concert = ConcertFactory.Create("Geo Title", "Eng Title", "Descirption", DateTime.Now.AddDays(12));
 
             concert.AssignOrganizer("john");
 
-            var concerts = new ConcertRepository(new JsonParser<Concert>(), new RepositoryStorageOptions("event_tbl"));
+            var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
             concerts.Insert(concert);
 
             var newconcert = concerts.ById(concert.Id.ToString());
-            newconcert.ChangeConcertTitle(new EventTitleSummary(new GeoTitle("geo title2")));
+            newconcert.ChangeConcertTitle("new geo title", "new engTitle");
 
             concerts.Update(newconcert);
 
@@ -72,6 +69,8 @@ namespace ConsoleTesting
             new3.AssignOrganizer("sxva");
 
             concerts.Update(new3);
+
+            var new4 = concerts.ById(concert.Id.ToString());
         }
 
 

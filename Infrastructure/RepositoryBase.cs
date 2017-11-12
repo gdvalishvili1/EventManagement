@@ -26,10 +26,10 @@ namespace Infrastructure
         public int Version { get; }
     }
 
-    public class RepositoryStorageOptions
+    public class StorageOptions
     {
         public string TableName { get; set; }
-        public RepositoryStorageOptions(string tableName)
+        public StorageOptions(string tableName)
         {
             TableName = tableName;
         }
@@ -77,8 +77,8 @@ namespace Infrastructure
     public class RepositoryBase<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot
     {
         private JsonParser<TAggregate> _jsonParser;
-        private RepositoryStorageOptions _options;
-        public RepositoryBase(JsonParser<TAggregate> jsonParser, RepositoryStorageOptions options)
+        private StorageOptions _options;
+        public RepositoryBase(JsonParser<TAggregate> jsonParser, StorageOptions options)
         {
             _jsonParser = jsonParser;
             _options = options;
@@ -98,14 +98,14 @@ namespace Infrastructure
             var eventEntry = new PersitedObjectContainer(aggregateRoot.Id.AsGuid(), data, 1);
             Execute(con =>
             {
-                con.Execute($"insert into event_tbl (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})");
+                con.Execute($"insert into {_options.TableName} (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})");
             });
         }
 
         public void Update(TAggregate aggregateRoot)
         {
             var entry = Get(aggregateRoot.Id.ToString());
-            if (entry.Version > aggregateRoot.Version)
+            if (entry.Version > aggregateRoot.Version())
             {
                 throw new Exception("concurency");
             }
@@ -116,7 +116,7 @@ namespace Infrastructure
 
             Execute(con =>
             {
-                con.Execute($"update event_tbl set data='{updatedEntry.Data}',version={updatedEntry.Version}");
+                con.Execute($"update {_options.TableName} set data='{updatedEntry.Data}',version={updatedEntry.Version}");
             });
         }
 
@@ -144,7 +144,8 @@ namespace Infrastructure
 
     public class ConcertRepository : RepositoryBase<Concert>
     {
-        public ConcertRepository(JsonParser<Concert> jsonParser, RepositoryStorageOptions options) : base(jsonParser, options)
+        public ConcertRepository(JsonParser<Concert> jsonParser, StorageOptions options)
+            : base(jsonParser, options)
         {
         }
     }

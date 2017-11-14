@@ -71,6 +71,10 @@ namespace ConsoleTesting
             concerts.Update(new3);
 
             var new4 = concerts.ById(concert.Id.ToString());
+
+
+            IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;
+            var dto = provideEntitySnapshot.Snapshot();
         }
 
 

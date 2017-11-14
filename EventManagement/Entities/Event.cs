@@ -10,7 +10,7 @@ namespace EventManagement.Entities
         private EventTitleSummary EventTitle { get; set; }
         public Event()
         {
-
+            var concert = new Concert(new EventId(""), null, null);            
         }
         //public Event(EventId eventId, EventDescription eventDescription, EventTitleSummary title)
         //{

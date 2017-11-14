@@ -12,14 +12,15 @@ namespace EventManagement.Entities
     }
     public class ConcertSnapshot
     {
-        public string Id { get; set; }
+        public Identity Id { get; set; }
         public DateTime Date { get; set; }
         public string Organizer { get; set; }
         public string Description { get; set; }
         public string TitleGeo { get; set; }
         public string TitleEng { get; set; }
-        public ConcertSnapshot(DateTime date, string organizer, string description, string titleGeo, string titleEng)
+        public ConcertSnapshot(Identity id, DateTime date, string organizer, string description, string titleGeo, string titleEng)
         {
+            Id = id;
             Date = date;
             Description = description;
             Organizer = organizer;
@@ -67,7 +68,7 @@ namespace EventManagement.Entities
 
         public static Concert CreateFrom(ConcertSnapshot snapshot)
         {
-            return new Concert(new EventId(snapshot.Id),
+            return new Concert(new EventId(snapshot.Id.ToString()),
                 new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
                 new EventDescription(snapshot.Date, snapshot.Description)
                 );
@@ -88,9 +89,19 @@ namespace EventManagement.Entities
             EventTitle = new EventTitleSummary(new GeoTitle(newGeoTitle)).WithAnotherTitle(new EngTitle(newEngTitle));
         }
 
+        public void Postpone(DateTime date)
+        {
+            EventDescription.ChangeDate(date);
+        }
+
+        public void Archieve()
+        {
+            //change publish status and etc...
+        }
+
         ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
         {
-            return new ConcertSnapshot(DateTime.Now, null, null, null, null);
+            return new ConcertSnapshot(Id, DateTime.Now, Organizer, EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
         }
     }
 }

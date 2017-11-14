@@ -49,9 +49,8 @@ namespace EventManagement.Entities
 
         internal Concert(EventId id,
             EventTitleSummary eventTitle,
-            EventDescription eventDescription)
+            EventDescription eventDescription) : base(id)
         {
-            Id = id ?? throw new ArgumentNullException(nameof(id));
             EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
         }
@@ -68,6 +67,7 @@ namespace EventManagement.Entities
 
         public static Concert CreateFrom(ConcertSnapshot snapshot)
         {
+            //correct this
             return new Concert(new EventId(snapshot.Id.ToString()),
                 new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
                 new EventDescription(snapshot.Date, snapshot.Description)
@@ -101,7 +101,7 @@ namespace EventManagement.Entities
 
         ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
         {
-            return new ConcertSnapshot(Id, DateTime.Now, Organizer, EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
+            return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer, EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
         }
     }
 }

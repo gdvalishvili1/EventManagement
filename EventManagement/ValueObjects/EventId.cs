@@ -5,23 +5,16 @@ using System.Text;
 
 namespace EventManagement.ValueObjects
 {
-
     public class EventId : Identity
     {
-        Guid Value { get; }
-        public EventId(string value)
+        public EventId(string id) : base(id)
         {
-            Value = Guid.Parse(value);
+
         }
 
         public override string ToString()
         {
-            return Value.ToString();
-        }
-
-        public override Guid AsGuid()
-        {
-            return Value;
+            return Id.ToString();
         }
     }
 }

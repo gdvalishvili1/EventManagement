@@ -13,6 +13,8 @@ using System.Reflection;
 using Newtonsoft.Json.Serialization;
 using Infrastructure;
 using EventManagement.Factories;
+using EventManagement.Infrastructure;
+using Shared.model;
 
 namespace ConsoleTesting
 {
@@ -74,10 +76,40 @@ namespace ConsoleTesting
 
 
             IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;
-            var dto = provideEntitySnapshot.Snapshot();
+            ConcertSnapshot snapshot = provideEntitySnapshot.Snapshot();
+
+            using (EventContext c = new EventContext())
+            {
+                c.Concerts.Add(new ConcertEntity
+                {
+                    Id = snapshot.Id.AsGuid(),
+                    Date = snapshot.Date,
+                    Description = snapshot.Description,
+                    Organizer = snapshot.Description,
+                    TitleEng = snapshot.TitleEng,
+                    TitleGeo = snapshot.TitleGeo
+                });
+                c.SaveChanges();
+            }
+
+            using (EventContext c = new EventContext())
+            {
+                var concertEntity = c.Concerts.FirstOrDefault(x => x.Id ==
+                Guid.Parse("9B3F6FA7-C5FC-4523-9976-ABF005D3FF5A"));
+                var rehidratedConcert = Concert.CreateFrom(new ConcertSnapshot
+                    (new EventId(concertEntity.Id.ToString()),
+                    concertEntity.Date,
+                    concertEntity.Organizer,
+                    concertEntity.Description,
+                    concertEntity.TitleGeo,
+                    concertEntity.TitleEng
+                    )
+                );
+            }
+
+
+
         }
-
-
 
         public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
             where T : IEventSourcedAggregateRoot

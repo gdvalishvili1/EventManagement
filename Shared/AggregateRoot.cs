@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,30 +9,31 @@ namespace Shared
     {
         public Guid AsGuid()
         {
-            return Guid.Parse(Id);
+            return Guid.Parse(Value);
         }
         public Identity()
         {
-            this.Id = Guid.NewGuid().ToString();
+            this.Value = Guid.NewGuid().ToString();
         }
 
-        public Identity(string id)
+        [JsonConstructor]
+        public Identity(string value)
         {
-            if (string.IsNullOrWhiteSpace(id))
+            if (string.IsNullOrWhiteSpace(value))
             {
-                throw new ArgumentException("not be null or empty", nameof(id));
+                throw new ArgumentException("not be null or empty", nameof(value));
             }
 
-            this.Id = id;
+            this.Value = value;
         }
 
-        public string Id { get; set; }
+        public string Value { get; }
 
         public bool Equals(Identity id)
         {
             if (object.ReferenceEquals(this, id)) return true;
             if (object.ReferenceEquals(null, id)) return false;
-            return this.Id.Equals(id.Id);
+            return this.Value.Equals(id.Value);
         }
 
         public override bool Equals(object anotherObject)
@@ -41,12 +43,12 @@ namespace Shared
 
         public override int GetHashCode()
         {
-            return this.GetType().GetHashCode() + this.Id.GetHashCode();
+            return this.GetType().GetHashCode() + this.Value.GetHashCode();
         }
 
         public override string ToString()
         {
-            return Id;
+            return Value;
         }
     }
 
@@ -60,11 +62,6 @@ namespace Shared
     public abstract class AggregateRoot : Entity, IVersionedAggregateRoot
     {
         private int _version;
-        public Identity Id { get; protected set; }
-        public AggregateRoot(Identity id)
-        {
-            Id = id ?? throw new ArgumentNullException(nameof(id));
-        }
         public AggregateRoot()
         {
 

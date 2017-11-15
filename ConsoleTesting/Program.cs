@@ -15,6 +15,7 @@ using Infrastructure;
 using EventManagement.Factories;
 using EventManagement.Infrastructure;
 using Shared.model;
+using EventManagement.Seat;
 
 namespace ConsoleTesting
 {
@@ -58,6 +59,26 @@ namespace ConsoleTesting
 
             concert.AssignOrganizer("john");
 
+            var eventSeatSummary = new EventSeatSummary(new EventSeatSummaryId(Guid.NewGuid().ToString()), concert.Id);
+
+            eventSeatSummary.AddSeatType(
+                new SeatType(new SeatTypeId(),
+                new EventId(),
+                "First Sector",
+                100,
+                new Money("GEL", 20))
+                );
+
+            eventSeatSummary.AddSeatType(
+                new SeatType(new SeatTypeId(),
+                new EventId(),
+                "Second Sector",
+                100,
+                new Money("GEL", 10))
+                );
+
+            concert.AddEventSeatSummary(eventSeatSummary);
+
             var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
             concerts.Insert(concert);
 
@@ -75,40 +96,38 @@ namespace ConsoleTesting
             var new4 = concerts.ById(concert.Id.ToString());
 
 
-            IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;
-            ConcertSnapshot snapshot = provideEntitySnapshot.Snapshot();
 
-            using (EventContext c = new EventContext())
-            {
-                c.Concerts.Add(new ConcertEntity
-                {
-                    Id = snapshot.Id.AsGuid(),
-                    Date = snapshot.Date,
-                    Description = snapshot.Description,
-                    Organizer = snapshot.Description,
-                    TitleEng = snapshot.TitleEng,
-                    TitleGeo = snapshot.TitleGeo
-                });
-                c.SaveChanges();
-            }
+            //IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;
+            //ConcertSnapshot snapshot = provideEntitySnapshot.Snapshot();
 
-            using (EventContext c = new EventContext())
-            {
-                var concertEntity = c.Concerts.FirstOrDefault(x => x.Id ==
-                Guid.Parse("9B3F6FA7-C5FC-4523-9976-ABF005D3FF5A"));
-                var rehidratedConcert = Concert.CreateFrom(new ConcertSnapshot
-                    (new EventId(concertEntity.Id.ToString()),
-                    concertEntity.Date,
-                    concertEntity.Organizer,
-                    concertEntity.Description,
-                    concertEntity.TitleGeo,
-                    concertEntity.TitleEng
-                    )
-                );
-            }
+            //using (EventContext c = new EventContext())
+            //{
+            //    c.Concerts.Add(new ConcertEntity
+            //    {
+            //        Id = snapshot.Id.AsGuid(),
+            //        Date = snapshot.Date,
+            //        Description = snapshot.Description,
+            //        Organizer = snapshot.Description,
+            //        TitleEng = snapshot.TitleEng,
+            //        TitleGeo = snapshot.TitleGeo
+            //    });
+            //    c.SaveChanges();
+            //}
 
-
-
+            //using (EventContext c = new EventContext())
+            //{
+            //    var concertEntity = c.Concerts.FirstOrDefault(x => x.Id ==
+            //    Guid.Parse("9B3F6FA7-C5FC-4523-9976-ABF005D3FF5A"));
+            //    var rehidratedConcert = Concert.CreateFrom(new ConcertSnapshot
+            //        (new EventId(concertEntity.Id.ToString()),
+            //        concertEntity.Date,
+            //        concertEntity.Organizer,
+            //        concertEntity.Description,
+            //        concertEntity.TitleGeo,
+            //        concertEntity.TitleEng
+            //        )
+            //    );
+            //}
         }
 
         public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)

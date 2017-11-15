@@ -1,4 +1,5 @@
 ﻿using EventManagement.Events;
+using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
 using Shared;
@@ -41,6 +42,10 @@ namespace EventManagement.Entities
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
         private string Organizer { get; set; }
+        private EventSeatSummary EventSeatSummary { get; set; }
+        public EventId Id { get; }
+
+        public override string Identity => Id.Value;
 
         private Concert() : base()
         {
@@ -49,8 +54,9 @@ namespace EventManagement.Entities
 
         internal Concert(EventId id,
             EventTitleSummary eventTitle,
-            EventDescription eventDescription) : base(id)
+            EventDescription eventDescription)
         {
+            Id = id ?? throw new ArgumentNullException(nameof(id));
             EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
         }
@@ -59,10 +65,12 @@ namespace EventManagement.Entities
         private Concert(EventId id,
             EventTitleSummary eventTitle,
             EventDescription eventDescription,
-            string organizer) :
+            string organizer,
+            EventSeatSummary eventSeatSummary) :
             this(id, eventTitle, eventDescription)
         {
             Organizer = organizer;
+            EventSeatSummary = eventSeatSummary;
         }
 
         public static Concert CreateFrom(ConcertSnapshot snapshot)
@@ -97,6 +105,11 @@ namespace EventManagement.Entities
         public void Archieve()
         {
             //change publish status and etc...
+        }
+
+        public void AddEventSeatSummary(EventSeatSummary eventSeatSummaryId)
+        {
+            EventSeatSummary = eventSeatSummaryId ?? throw new ArgumentNullException(nameof(eventSeatSummaryId));
         }
 
         ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()

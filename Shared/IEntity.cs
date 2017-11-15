@@ -6,6 +6,6 @@ namespace Shared
 {
     public abstract class Entity
     {
-        Identity Id { get; }
+        public abstract string Identity { get; }
     }
 }

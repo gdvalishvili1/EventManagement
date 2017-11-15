@@ -95,7 +95,7 @@ namespace Infrastructure
         public void Insert(TAggregate aggregateRoot)
         {
             var data = _jsonParser.AsJson(aggregateRoot);
-            var eventEntry = new PersitedObjectContainer(aggregateRoot.Id.AsGuid(), data, 1);
+            var eventEntry = new PersitedObjectContainer(Guid.Parse(aggregateRoot.Identity), data, 1);
             Execute(con =>
             {
                 con.Execute($"insert into {_options.TableName} (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})");
@@ -104,15 +104,15 @@ namespace Infrastructure
 
         public void Update(TAggregate aggregateRoot)
         {
-            var entry = Get(aggregateRoot.Id.ToString());
-            if (entry.Version > aggregateRoot.Version())
+            var entry = Get(aggregateRoot.Identity);
+            if (entry.Version != aggregateRoot.Version())
             {
-                throw new Exception("concurency");
+                throw new Exception("concurency exception");
             }
 
             var data = _jsonParser.AsJson(aggregateRoot);
 
-            var updatedEntry = new PersitedObjectContainer(aggregateRoot.Id.AsGuid(), data, entry.Version + 1);
+            var updatedEntry = new PersitedObjectContainer(Guid.Parse(aggregateRoot.Identity), data, entry.Version + 1);
 
             Execute(con =>
             {

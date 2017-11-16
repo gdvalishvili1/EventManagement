@@ -6,14 +6,14 @@ using System.Text;
 
 namespace EventManagement.ValueObjects
 {
-    public class EventId : Identity
+    public class ConcertId : Identity
     {
-        public EventId()
+        public ConcertId()
         {
         }
 
         [JsonConstructor]
-        public EventId(string value) : base(value)
+        public ConcertId(string value) : base(value)
         {
 
         }

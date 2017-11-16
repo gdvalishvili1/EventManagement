@@ -26,6 +26,11 @@ namespace Shared
             return _changes;
         }
 
+        void IEventSourcedAggregateRoot.MarkChangesAsCommitted()
+        {
+            _changes.Clear();
+        }
+
         void IEventSourcedAggregateRoot.Apply(List<DomainEvent> changes)
         {
             changes.ForEach(change => (this as IEventSourcedAggregateRoot).Apply(change));
@@ -42,18 +47,16 @@ namespace Shared
             whenMethod.Single().Invoke(this, new object[] { change });
         }
 
-        void IEventSourcedAggregateRoot.MarkChangesAsCommitted()
-        {
-            _changes.Clear();
-        }
+        
     }
 
     public interface IEventSourcedAggregateRoot
     {
         IEnumerable<DomainEvent> UncommittedChanges();
+        void MarkChangesAsCommitted();
         void Apply(List<DomainEvent> changes);
         void Apply(DomainEvent change);
-        void MarkChangesAsCommitted();
+
     }
 
     public interface IStoreAggregateRootChanges

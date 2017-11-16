@@ -57,13 +57,16 @@ namespace ConsoleTesting
 
             Concert concert = ConcertFactory.Create("Geo Title", "Eng Title", "Descirption", DateTime.Now.AddDays(12));
 
+            var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
+            concerts.Insert(concert);
+
             concert.AssignOrganizer("john");
 
-            var eventSeatSummary = new EventSeatSummary(new EventSeatSummaryId(Guid.NewGuid().ToString()), concert.Id);
+            var eventSeatSummary = new ConcertSeatSummary(new ConcertSeatSummaryId(Guid.NewGuid().ToString()), concert.Id);
 
             eventSeatSummary.AddSeatType(
                 new SeatType(new SeatTypeId(),
-                new EventId(),
+                new ConcertId(),
                 "First Sector",
                 100,
                 new Money("GEL", 20))
@@ -71,16 +74,13 @@ namespace ConsoleTesting
 
             eventSeatSummary.AddSeatType(
                 new SeatType(new SeatTypeId(),
-                new EventId(),
+                new ConcertId(),
                 "Second Sector",
                 100,
                 new Money("GEL", 10))
                 );
 
             concert.AddEventSeatSummary(eventSeatSummary);
-
-            var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
-            concerts.Insert(concert);
 
             var newconcert = concerts.ById(concert.Id.ToString());
             newconcert.ChangeConcertTitle("new geo title", "new engTitle");
@@ -94,7 +94,6 @@ namespace ConsoleTesting
             concerts.Update(new3);
 
             var new4 = concerts.ById(concert.Id.ToString());
-
 
 
             //IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;

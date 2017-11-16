@@ -11,7 +11,7 @@ namespace EventManagement.Factories
         public static Concert Create(string titleGeo, string titleEng, string description, DateTime concertDate)
         {
             var concert = new Concert(
-                new EventId(Guid.NewGuid().ToString()),
+                new ConcertId(Guid.NewGuid().ToString()),
                 new EventTitleSummary(new GeoTitle(titleGeo)).WithAnotherTitle(new EngTitle(titleEng)),
                 new EventDescription(concertDate, description)
                 );

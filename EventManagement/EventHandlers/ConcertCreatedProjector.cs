@@ -7,7 +7,7 @@ namespace EventManagement.EventHandlers
     {
         public void Project(ConcertCreated @event)
         {
-            Console.WriteLine($"concert registered {@event.Name}");
+            Console.WriteLine($"concert registered {@event.TitleGe}");
         }
     }
 }

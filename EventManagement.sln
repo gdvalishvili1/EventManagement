@@ -29,7 +29,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement.Infrastruct
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement.Tests", "EventManagement.Tests\EventManagement.Tests.csproj", "{9AB2552D-04C1-4AA4-9416-68F5272769DB}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console.Client", "Client\Console.Client\Console.Client.csproj", "{1BBF3D63-760E-4B2D-9419-3E8A7D7851C8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Console.Client", "Console.Client\Console.Client.csproj", "{1BBF3D63-760E-4B2D-9419-3E8A7D7851C8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{BC34BB70-1AFF-41C9-AFED-70BDAD215E94}"
 EndProject

@@ -1,7 +1,5 @@
 ﻿using Dapper;
-using EventManagement.Concert;
-using EventManagement.Entities;
-using EventManagement.ValueObjects;
+using EventManagement.ConcertAggregate;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Shared;
@@ -10,7 +8,6 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Infrastructure
 {

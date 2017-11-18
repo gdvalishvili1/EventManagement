@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.12
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement", "EventManagement\EventManagement.csproj", "{A71CC071-26F7-4AEE-8667-CC272E836207}"
 EndProject
@@ -25,9 +25,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OrderManagementContext", "O
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AccountsContext", "AccountsContext", "{1497D929-8977-4B0A-8EF8-D1B8416B34B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Accounts", "Accounts\Accounts.csproj", "{B0948AE5-4E0E-4250-8A0E-EC724728D235}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts", "Accounts\Accounts.csproj", "{B0948AE5-4E0E-4250-8A0E-EC724728D235}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventManagement.Infrastructure", "EventManagement.Infrastructure\EventManagement.Infrastructure.csproj", "{6AFF0341-B0D1-4A19-9C21-61494C9EA898}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement.Infrastructure", "EventManagement.Infrastructure\EventManagement.Infrastructure.csproj", "{6AFF0341-B0D1-4A19-9C21-61494C9EA898}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement.Tests", "EventManagement.Tests\EventManagement.Tests.csproj", "{9AB2552D-04C1-4AA4-9416-68F5272769DB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -67,6 +69,10 @@ Global
 		{6AFF0341-B0D1-4A19-9C21-61494C9EA898}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6AFF0341-B0D1-4A19-9C21-61494C9EA898}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6AFF0341-B0D1-4A19-9C21-61494C9EA898}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9AB2552D-04C1-4AA4-9416-68F5272769DB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9AB2552D-04C1-4AA4-9416-68F5272769DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9AB2552D-04C1-4AA4-9416-68F5272769DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9AB2552D-04C1-4AA4-9416-68F5272769DB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -82,6 +88,7 @@ Global
 		{1497D929-8977-4B0A-8EF8-D1B8416B34B0} = {89D572F2-8444-47D1-9A07-C937DC657BC2}
 		{B0948AE5-4E0E-4250-8A0E-EC724728D235} = {1497D929-8977-4B0A-8EF8-D1B8416B34B0}
 		{6AFF0341-B0D1-4A19-9C21-61494C9EA898} = {9FD72FCD-C4C5-4A11-8F31-2B283CBE1286}
+		{9AB2552D-04C1-4AA4-9416-68F5272769DB} = {9FD72FCD-C4C5-4A11-8F31-2B283CBE1286}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {E270C8B8-07A6-4633-B3A4-49FCBD4E1ED7}

@@ -1,15 +1,12 @@
-﻿using EventManagement.Concert;
-using EventManagement.Events;
+﻿using EventManagement.Events;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
 using Shared;
 using System;
 
-namespace EventManagement.Concert
+namespace EventManagement.ConcertAggregate
 {
-
-
     public class Concert : AggregateRoot, IProvideSnapshot<ConcertSnapshot>
     {
         private EventDescription EventDescription { get; set; }
@@ -71,12 +68,13 @@ namespace EventManagement.Concert
 
         public void ChangeConcertTitle(string newGeoTitle, string newEngTitle)
         {
-            EventTitle = new EventTitleSummary(new GeoTitle(newGeoTitle)).WithAnotherTitle(new EngTitle(newEngTitle));
+            EventTitle = new EventTitleSummary(new GeoTitle(newGeoTitle))
+                .WithAnotherTitle(new EngTitle(newEngTitle));
         }
 
         public void Postpone(DateTime date)
         {
-            EventDescription.ChangeDate(date);
+            EventDescription = EventDescription.ChangeDate(date);
         }
 
         public void Archieve()
@@ -89,13 +87,14 @@ namespace EventManagement.Concert
             EventSeatSummary = eventSeatSummary ?? throw new ArgumentNullException(nameof(eventSeatSummary));
 
             this.Emit(new ConcertSeatSummaryAdded(
-                new ConcertSeatSummarySnapshotProvider(EventSeatSummary).Provide(), Id.Value)
+                new ConcertSeatSummarySnapshotProvider(EventSeatSummary).Snapshot, Id.Value)
                 );
         }
 
         ConcertSnapshot IProvideSnapshot<ConcertSnapshot>.Snapshot()
         {
-            return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer, EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
+            return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer,
+                EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
         }
     }
 }

@@ -12,9 +12,6 @@ namespace Shared
             _snapshotContainer = snapshotContainer;
         }
 
-        public TSnapshot Provide()
-        {
-            return _snapshotContainer.Snapshot();
-        }
+        public TSnapshot Snapshot { get { return _snapshotContainer.Snapshot(); } }
     }
 }

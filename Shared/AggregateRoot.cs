@@ -9,7 +9,7 @@ namespace Shared
     {
         private int _version;
 
-        private IList<DomainEvent> _events { get; }
+        private IList<DomainEvent> _events { get; } = new List<DomainEvent>();
 
         public AggregateRoot()
         {

@@ -1,4 +1,5 @@
-﻿using EventManagement.Venue;
+﻿using EventManagement.ConcertSeatSummaryAggregate;
+using EventManagement.Venue;
 using Shared;
 using System;
 using System.Collections.Generic;
@@ -8,11 +9,11 @@ namespace EventManagement.Seat
 {
     public class Seat : Entity
     {
-        public Seat(SeatId id, VenueId venueId, SeatType seatTye)
+        public Seat(SeatId id, VenueId venueId, SeatTypeId seatTyeId)
         {
             Id = id ?? throw new ArgumentNullException(nameof(id));
             VenueId = venueId ?? throw new ArgumentNullException(nameof(venueId));
-            SeatTye = seatTye ?? throw new ArgumentNullException(nameof(seatTye));
+            SeatTye = seatTyeId ?? throw new ArgumentNullException(nameof(seatTyeId));
         }
 
         public SeatId Id { get; }
@@ -20,6 +21,6 @@ namespace EventManagement.Seat
         public override string Identity => Id.Value;
 
         private VenueId VenueId { get; }
-        private SeatType SeatTye { get; }
+        private SeatTypeId SeatTye { get; }
     }
 }

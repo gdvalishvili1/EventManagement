@@ -1,4 +1,5 @@
-﻿using EventManagement.Seat;
+﻿using EventManagement.ConcertSeatSummaryAggregate;
+using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Shared;
 using Shared.model;

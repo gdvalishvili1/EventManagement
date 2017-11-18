@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EventManagement.Seat
+namespace EventManagement.ConcertSeatSummaryAggregate
 {   
     public class ConcertSeatSummary : Entity, IProvideSnapshot<ConcertSeatSummarySnapshot>
     {

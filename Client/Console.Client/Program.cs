@@ -1,4 +1,5 @@
 ﻿using EventManagement.ConcertAggregate;
+using EventManagement.ConcertSeatSummaryAggregate;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Infrastructure;

@@ -1,4 +1,5 @@
-﻿using EventManagement.Events;
+﻿using EventManagement.ConcertSeatSummaryAggregate;
+using EventManagement.Events;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;

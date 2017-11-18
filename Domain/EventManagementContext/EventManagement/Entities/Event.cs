@@ -1,7 +1,4 @@
-﻿using EventManagement.ValueObjects;
-using Shared;
-
-namespace EventManagement.Entities
+﻿namespace EventManagement.Entities
 {
     //public abstract class Event : AggregateRoot
     //{

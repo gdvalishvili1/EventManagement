@@ -1,4 +1,5 @@
 ﻿using Dapper;
+using EventManagement.Concert;
 using EventManagement.Entities;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;

@@ -10,127 +10,8 @@ using System.Linq;
 using System.Text;
 
 namespace EventManagement.Seat
-{
-    public class SeatTypeId : Identity
-    {
-        public SeatTypeId()
-        {
-        }
-        [JsonConstructor]
-        public SeatTypeId(string value) : base(value)
-        {
-        }
-    }
-    public class SeatType : Entity
-    {
-        private ConcertId EventId { get; }
-
-        public SeatTypeId Id { get; }
-
-        private string Name { get; set; }
-
-        private int Quantity { get; set; }
-
-        private Money Price { get; set; }
-
-        public override string Identity => Id.Value;
-
-        public SeatType(SeatTypeId id, ConcertId eventId, string name, int quantity, Money price)
-        {
-            if (string.IsNullOrWhiteSpace(name))
-            {
-                throw new ArgumentException("not be null or empty", nameof(name));
-            }
-
-            if (quantity <= 0)
-            {
-                throw new ArgumentException("must be greater than zero", nameof(name));
-            }
-
-            Id = id;
-            EventId = eventId ?? throw new ArgumentNullException(nameof(eventId));
-            Name = name;
-            Quantity = quantity;
-            Price = price ?? throw new ArgumentNullException(nameof(price));
-        }
-    }
-
-    public class SeatId : Identity
-    {
-        public SeatId()
-        {
-        }
-        [JsonConstructor]
-        public SeatId(string value) : base(value)
-        {
-        }
-    }
-
-    public class Seat : Entity
-    {
-        public Seat(SeatId id, VenueId venueId, SeatType seatTye)
-        {
-            Id = id ?? throw new ArgumentNullException(nameof(id));
-            VenueId = venueId ?? throw new ArgumentNullException(nameof(venueId));
-            SeatTye = seatTye ?? throw new ArgumentNullException(nameof(seatTye));
-        }
-
-        public SeatId Id { get; }
-
-        public override string Identity => Id.Value;
-
-        private VenueId VenueId { get; }
-        private SeatType SeatTye { get; }
-    }
-
-    public class ConcertSeatSummaryId : Identity
-    {
-        public ConcertSeatSummaryId()
-        {
-        }
-        [JsonConstructor]
-        public ConcertSeatSummaryId(string value) : base(value)
-        {
-        }
-    }
-
-    public class SeatTypeSnapshot
-    {
-        public SeatTypeSnapshot(string id, string name, int quantity, Money money)
-        {
-            Id = id;
-            Name = name;
-            Quantity = quantity;
-            Price = Tuple.Create(money.Currency, money.Amount);
-        }
-
-        public string Id { get; }
-        public string Name { get; }
-        public int Quantity { get; }
-        public Tuple<string, decimal> Price { get; }
-    }
-
-    public class ConcertSeatSummarySnapshotProvider : SnapshotProvider<ConcertSeatSummarySnapshot>
-    {
-        public ConcertSeatSummarySnapshotProvider(IProvideEntitySnapshot<ConcertSeatSummarySnapshot> snapshotContainer)
-            : base(snapshotContainer)
-        {
-        }
-    }
-    public class ConcertSeatSummarySnapshot
-    {
-        public ConcertSeatSummarySnapshot(string id, string eventId, List<SeatType> seatTypes)
-        {
-
-        }
-        public string Id { get; }
-
-        public string ConcertId { get; }
-
-        public List<SeatTypeSnapshot> SeatTypes { get; }
-    }
-
-    public class ConcertSeatSummary : Entity, IProvideEntitySnapshot<ConcertSeatSummarySnapshot>
+{   
+    public class ConcertSeatSummary : Entity, IProvideSnapshot<ConcertSeatSummarySnapshot>
     {
         public ConcertSeatSummaryId Id { get; }
 
@@ -168,7 +49,7 @@ namespace EventManagement.Seat
             SeatTypes.Add(seatType);
         }
 
-        ConcertSeatSummarySnapshot IProvideEntitySnapshot<ConcertSeatSummarySnapshot>.Snapshot()
+        ConcertSeatSummarySnapshot IProvideSnapshot<ConcertSeatSummarySnapshot>.Snapshot()
         {
             return new ConcertSeatSummarySnapshot(Id.Value, ConcertId.Value, SeatTypes);
         }

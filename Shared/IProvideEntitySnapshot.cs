@@ -4,15 +4,10 @@ using System.Text;
 
 namespace Shared
 {
-    public interface IProvideEntitySnapshot<TSnapshot>
-    {
-        TSnapshot Snapshot();
-    }
-
     public class SnapshotProvider<TSnapshot>
     {
-        IProvideEntitySnapshot<TSnapshot> _snapshotContainer;
-        public SnapshotProvider(IProvideEntitySnapshot<TSnapshot> snapshotContainer)
+        IProvideSnapshot<TSnapshot> _snapshotContainer;
+        public SnapshotProvider(IProvideSnapshot<TSnapshot> snapshotContainer)
         {
             _snapshotContainer = snapshotContainer;
         }

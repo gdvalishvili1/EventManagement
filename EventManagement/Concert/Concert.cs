@@ -1,39 +1,16 @@
-﻿using EventManagement.Events;
+﻿using EventManagement.Concert;
+using EventManagement.Events;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
 using Shared;
 using System;
 
-namespace EventManagement.Entities
+namespace EventManagement.Concert
 {
-    public class ConcertSnapshot
-    {
-        public Identity Id { get; set; }
-        public DateTime Date { get; set; }
-        public string Organizer { get; set; }
-        public string Description { get; set; }
-        public string TitleGeo { get; set; }
-        public string TitleEng { get; set; }
-        public ConcertSnapshot(Identity id, DateTime date, string organizer, string description, string titleGeo, string titleEng)
-        {
-            Id = id;
-            Date = date;
-            Description = description;
-            Organizer = organizer;
-            TitleGeo = titleGeo;
-            TitleEng = titleEng;
-        }
 
-        public static ConcertSnapshot CreateFrom(Concert concert)
-        {
-            IProvideEntitySnapshot<ConcertSnapshot> snapshotProvider = concert;
-            var concertSnapshot = snapshotProvider.Snapshot();
-            return concertSnapshot;
-        }
-    }
 
-    public class Concert : AggregateRoot, IProvideEntitySnapshot<ConcertSnapshot>
+    public class Concert : AggregateRoot, IProvideSnapshot<ConcertSnapshot>
     {
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
@@ -116,7 +93,7 @@ namespace EventManagement.Entities
                 );
         }
 
-        ConcertSnapshot IProvideEntitySnapshot<ConcertSnapshot>.Snapshot()
+        ConcertSnapshot IProvideSnapshot<ConcertSnapshot>.Snapshot()
         {
             return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer, EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
         }

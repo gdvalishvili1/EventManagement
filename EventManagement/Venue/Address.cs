@@ -22,6 +22,4 @@ namespace EventManagement.Venue
             yield return Latitude;
         }
     }
-
-
 }

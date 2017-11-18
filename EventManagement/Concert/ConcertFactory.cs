@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.Factories
+namespace EventManagement.Concert
 {
     public class ConcertFactory
     {

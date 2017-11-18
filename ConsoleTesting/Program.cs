@@ -1,21 +1,12 @@
-﻿using EventManagement.Entities;
-using Infrastructure.EventDispatching;
-using Infrastructure.EventSourcedAggregateRoot;
-using Infrastructure.EventStore;
+﻿using EventManagement.Concert;
+using EventManagement.Seat;
 using EventManagement.ValueObjects;
+using Infrastructure;
 using Shared;
+using Shared.model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using EventManagement;
-using Newtonsoft.Json;
-using System.Reflection;
-using Newtonsoft.Json.Serialization;
-using Infrastructure;
-using EventManagement.Factories;
-using EventManagement.Infrastructure;
-using Shared.model;
-using EventManagement.Seat;
 
 namespace ConsoleTesting
 {

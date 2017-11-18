@@ -6,15 +6,6 @@ using System.Text;
 
 namespace EventManagement.Venue
 {
-    public class VenueId : Identity
-    {
-        public VenueId() { }
-        [JsonConstructor]
-        public VenueId(string value) : base(value)
-        {
-        }
-    }
-
     public class Venue : AggregateRoot
     {
         public override string Identity => Id.Value;

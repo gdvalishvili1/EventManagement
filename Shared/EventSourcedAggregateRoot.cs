@@ -38,29 +38,13 @@ namespace Shared
 
         void IEventSourcedAggregateRoot.Apply(DomainEvent change)
         {
-            var whenMethod = GetType()
+            var onMethod = GetType()
             .GetMethods(BindingFlags.NonPublic | BindingFlags.Instance)
             .Where(m => m.Name.Equals("On"))
             .Where(m => m.GetParameters()
             .SingleOrDefault(p => p.ParameterType.FullName.Equals(change.GetType().FullName)) != null);
 
-            whenMethod.Single().Invoke(this, new object[] { change });
+            onMethod.Single().Invoke(this, new object[] { change });
         }
-
-        
-    }
-
-    public interface IEventSourcedAggregateRoot
-    {
-        IEnumerable<DomainEvent> UncommittedChanges();
-        void MarkChangesAsCommitted();
-        void Apply(List<DomainEvent> changes);
-        void Apply(DomainEvent change);
-
-    }
-
-    public interface IStoreAggregateRootChanges
-    {
-        void StoreChanges();
     }
 }

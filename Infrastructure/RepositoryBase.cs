@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using EventManagement.ConcertAggregate;
+using EventManagement.ConcertSeatSummaryAggregate;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
 using Shared;
@@ -72,7 +73,7 @@ namespace Infrastructure
         }
     }
 
-    public class RepositoryBase<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot
+    public class RepositoryBase<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
     {
         private JsonParser<TAggregate> _jsonParser;
         private StorageOptions _options;
@@ -94,9 +95,15 @@ namespace Infrastructure
         {
             var data = _jsonParser.AsJson(aggregateRoot);
             var eventEntry = new PersitedObjectContainer(Guid.Parse(aggregateRoot.Identity), data, 1);
+
             Execute(con =>
             {
-                con.Execute($"insert into {_options.TableName} (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})");
+                using (var tran = con.BeginTransaction())
+                {
+                    con.Execute($"insert into {_options.TableName} (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})", transaction: tran);
+                    //get aggregateroot s uncommited events and save to database using the same transaction
+                    tran.Commit();
+                }
             });
         }
 
@@ -124,7 +131,7 @@ namespace Infrastructure
 
             Execute((con) =>
             {
-                result = con.QueryFirstOrDefault<PersitedObjectContainer>($"select * from event_tbl where id = '{id}'");
+                result = con.QueryFirstOrDefault<PersitedObjectContainer>($"select * from {_options.TableName} where id = '{id}'");
             });
 
             return result;
@@ -143,6 +150,14 @@ namespace Infrastructure
     public class ConcertRepository : RepositoryBase<Concert>
     {
         public ConcertRepository(JsonParser<Concert> jsonParser, StorageOptions options)
+            : base(jsonParser, options)
+        {
+        }
+    }
+
+    public class ConcertSeatSummaryRepository : RepositoryBase<ConcertSeatSummary>
+    {
+        public ConcertSeatSummaryRepository(JsonParser<ConcertSeatSummary> jsonParser, StorageOptions options)
             : base(jsonParser, options)
         {
         }

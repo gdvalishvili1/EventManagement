@@ -1,21 +1,22 @@
 ﻿using EventManagement.ConcertSeatSummaryAggregate;
-using EventManagement.Seat;
+using EventManagement.ValueObjects;
 using Shared;
-using Shared.model;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Text;
 
 namespace EventManagement.Events
 {
-    public class ConcertSeatSummaryAdded : DomainEvent
+    public class SeatTypeAdded : DomainEvent
     {
-        public ConcertSeatSummaryAdded(ConcertSeatSummarySnapshot snapshot, string aggregateRootId)
+        public SeatTypeAdded(SeatTypeSnapshot snapshot, ConcertId concertId, string aggregateRootId)
             : base(aggregateRootId, DateTime.Now)
         {
             Id = snapshot.Id;
-            ConcertId = snapshot.ConcertId;
+            SeatType = snapshot;
+            ConcertId = concertId.Value;
         }
+        public SeatTypeSnapshot SeatType { get; }
         public string Id { get; }
         public string ConcertId { get; }
     }

@@ -7,10 +7,10 @@ using System.Text;
 
 namespace EventManagement.ConcertSeatSummaryAggregate
 {
-    public class SeatType : Entity
+    public class SeatType : Entity, IProvideSnapshot<SeatTypeSnapshot>
     {
         private ConcertId EventId { get; }
-
+        private ConcertSeatSummaryId ConcertSeatSummaryId { get; }
         public SeatTypeId Id { get; }
 
         private string Name { get; set; }
@@ -21,7 +21,7 @@ namespace EventManagement.ConcertSeatSummaryAggregate
 
         public override string Identity => Id.Value;
 
-        public SeatType(SeatTypeId id, ConcertId eventId, string name, int quantity, Money price)
+        public SeatType(ConcertSeatSummaryId concertSeatSummaryId, SeatTypeId id, ConcertId eventId, string name, int quantity, Money price)
         {
             if (string.IsNullOrWhiteSpace(name))
             {
@@ -33,11 +33,17 @@ namespace EventManagement.ConcertSeatSummaryAggregate
                 throw new ArgumentException("must be greater than zero", nameof(name));
             }
 
+            ConcertSeatSummaryId = concertSeatSummaryId ?? throw new ArgumentNullException(nameof(concertSeatSummaryId));
             Id = id;
             EventId = eventId ?? throw new ArgumentNullException(nameof(eventId));
             Name = name;
             Quantity = quantity;
             Price = price ?? throw new ArgumentNullException(nameof(price));
+        }
+
+        SeatTypeSnapshot IProvideSnapshot<SeatTypeSnapshot>.Snapshot()
+        {
+            return new SeatTypeSnapshot(ConcertSeatSummaryId, Id.Value, Name, Quantity, Price);
         }
     }
 }

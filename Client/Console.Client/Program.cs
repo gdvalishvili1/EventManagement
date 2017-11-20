@@ -47,46 +47,28 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
+
             Concert concert = ConcertFactory.Create("Geo Title", "Eng Title", "Descirption", DateTime.Now.AddDays(12));
 
-            var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
-            concerts.Insert(concert);
+            var seatSummaries = new ConcertSeatSummaryRepository(new JsonParser<ConcertSeatSummary>(),
+                new StorageOptions("concertSeatSummary_tbl"));
 
-            concert.AssignOrganizer("john");
+            var concerts = new ConcertRepository(new JsonParser<Concert>(), new StorageOptions("event_tbl"));
+
+
+            concerts.Insert(concert);
 
             var eventSeatSummary = new ConcertSeatSummary(new ConcertSeatSummaryId(Guid.NewGuid().ToString()), concert.Id);
 
-            eventSeatSummary.AddSeatType(
-                new SeatType(new SeatTypeId(),
-                new ConcertId(),
-                "First Sector",
-                100,
-                new Money("GEL", 20))
+            eventSeatSummary.AddNewSeatType(
+                eventSeatSummary.CreateNewSeatType("first Sector", 100, new Money("GEL", 20))
                 );
 
-            eventSeatSummary.AddSeatType(
-                new SeatType(new SeatTypeId(),
-                new ConcertId(),
-                "Second Sector",
-                100,
-                new Money("GEL", 10))
+            eventSeatSummary.AddNewSeatType(
+                eventSeatSummary.CreateNewSeatType("Second Sector", 100, new Money("GEL", 10))
                 );
 
-            concert.AddEventSeatSummary(eventSeatSummary);
-
-            var newconcert = concerts.ById(concert.Id.ToString());
-            newconcert.ChangeConcertTitle("new geo title", "new engTitle");
-
-            concerts.Update(newconcert);
-
-            var new3 = concerts.ById(concert.Id.ToString());
-
-            new3.AssignOrganizer("sxva");
-
-            concerts.Update(new3);
-
-            var new4 = concerts.ById(concert.Id.ToString());
-
+            seatSummaries.Insert(eventSeatSummary);
 
             //IProvideEntitySnapshot<ConcertSnapshot> provideEntitySnapshot = concert;
             //ConcertSnapshot snapshot = provideEntitySnapshot.Snapshot();

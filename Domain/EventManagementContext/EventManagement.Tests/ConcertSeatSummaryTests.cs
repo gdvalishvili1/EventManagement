@@ -24,14 +24,10 @@ namespace EventManagement.Tests
 
             Assert.Throws(typeof(ArgumentException), () =>
             {
-                sut.AddSeatType(
-                new SeatType(
-                    new SeatTypeId(),
-                    concertId,
-                    "",
+                sut.AddNewSeatType(
+                sut.CreateNewSeatType("",
                     100,
-                    new Money("GEL", 20)
-                    )
+                    new Money("GEL", 20))
                 );
             });
         }
@@ -48,18 +44,14 @@ namespace EventManagement.Tests
 
             Assert.Throws(typeof(ArgumentException), () =>
             {
-                sut.AddSeatType(
-                new SeatType(
-                    new SeatTypeId(),
-                    concertId,
-                    "first sector",
+                sut.AddNewSeatType(
+                sut.CreateNewSeatType("first sector",
                     100,
-                    new Money("GEL", -2)
-                    )
+                    new Money("GEL", -2))
                 );
             });
         }
-        private ConcertSeatSummarySnapshot ConcertSeatSummarySnapshot(IProvideSnapshot<ConcertSeatSummarySnapshot> seatSummary)
+        private SeatTypeSnapshot ConcertSeatSummarySnapshot(IProvideSnapshot<SeatTypeSnapshot> seatSummary)
         {
             return seatSummary.Snapshot();
         }

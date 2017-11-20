@@ -13,7 +13,7 @@ namespace EventManagement.ConcertAggregate
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
         private string Organizer { get; set; }
-        private ConcertSeatSummary EventSeatSummary { get; set; }
+        private ConcertSeatSummaryId EventSeatSummaryId { get; set; }
         public ConcertId Id { get; }
 
         public override string Identity => Id.Value;
@@ -39,11 +39,14 @@ namespace EventManagement.ConcertAggregate
             EventTitleSummary eventTitle,
             EventDescription eventDescription,
             string organizer,
-            ConcertSeatSummary eventSeatSummary) :
-            this(id, eventTitle, eventDescription)
+            ConcertSeatSummaryId eventSeatSummaryId)
         {
             Organizer = organizer;
-            EventSeatSummary = eventSeatSummary;
+            EventSeatSummaryId = eventSeatSummaryId;
+
+            Id = id ?? throw new ArgumentNullException(nameof(id));
+            EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
+            EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
         }
 
         public static Concert CreateFrom(ConcertSnapshot snapshot)
@@ -83,13 +86,9 @@ namespace EventManagement.ConcertAggregate
             //change publish status and etc...
         }
 
-        public void AddEventSeatSummary(ConcertSeatSummary eventSeatSummary)
+        public void AddEventSeatSummary(ConcertSeatSummaryId eventSeatSummary)
         {
-            EventSeatSummary = eventSeatSummary ?? throw new ArgumentNullException(nameof(eventSeatSummary));
-
-            this.Emit(new ConcertSeatSummaryAdded(
-                new ConcertSeatSummarySnapshotProvider(EventSeatSummary).Snapshot, Id.Value)
-                );
+            EventSeatSummaryId = eventSeatSummary ?? throw new ArgumentNullException(nameof(eventSeatSummary));
         }
 
         ConcertSnapshot IProvideSnapshot<ConcertSnapshot>.Snapshot()

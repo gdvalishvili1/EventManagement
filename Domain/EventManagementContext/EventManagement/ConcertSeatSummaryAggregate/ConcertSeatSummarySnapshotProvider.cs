@@ -12,4 +12,12 @@ namespace EventManagement.ConcertSeatSummaryAggregate
         {
         }
     }
+
+    public class SeatTypeSnapshotProvider : SnapshotProvider<SeatTypeSnapshot>
+    {
+        public SeatTypeSnapshotProvider(IProvideSnapshot<SeatTypeSnapshot> snapshotContainer)
+            : base(snapshotContainer)
+        {
+        }
+    }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Shared
 {
-    public class SnapshotProvider<TSnapshot>
+    public abstract class SnapshotProvider<TSnapshot>
     {
         IProvideSnapshot<TSnapshot> _snapshotContainer;
         public SnapshotProvider(IProvideSnapshot<TSnapshot> snapshotContainer)

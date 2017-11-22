@@ -6,19 +6,30 @@ using System.Text;
 
 namespace EventManagement.ConcertAggregate
 {
-    public class ConcertFactory
+    public interface IAggregateFactory<TAggregate, Tsnapshot>
     {
-        public static Concert Create(string titleGeo, string titleEng, string description, DateTime concertDate)
+        TAggregate CreateFrom(Tsnapshot snapshot);
+    }
+    public class ConcertFactory : IAggregateFactory<Concert, ConcertSnapshot>
+    {
+        public Concert Create(string titleGeo, string titleEng, string description, DateTime concertDate)
         {
             return CreateInternal(titleGeo, titleEng, description, concertDate);
         }
 
-        public static Concert Create(ConcertId id, string titleGeo, string titleEng, string description, DateTime concertDate)
+        public Concert Create(ConcertId id, string titleGeo, string titleEng, string description, DateTime concertDate)
         {
             return CreateInternal(titleGeo, titleEng, description, concertDate, id);
         }
-
-        private static Concert CreateInternal(string titleGeo, string titleEng, string description, DateTime concertDate, ConcertId id = null)
+        public Concert CreateFrom(ConcertSnapshot snapshot)
+        {
+            //correct this
+            return new Concert(new ConcertId(snapshot.Id.ToString()),
+                new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
+                new EventDescription(snapshot.Date, snapshot.Description)
+                );
+        }
+        private Concert CreateInternal(string titleGeo, string titleEng, string description, DateTime concertDate, ConcertId id = null)
         {
             return new Concert(
                 id ?? new ConcertId(Guid.NewGuid().ToString()),

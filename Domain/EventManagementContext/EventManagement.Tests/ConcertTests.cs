@@ -12,18 +12,19 @@ namespace EventManagement.Tests
 {
     public class ConcertTests
     {
+        ConcertFactory concertFactory = new ConcertFactory();
         [Fact]
         public void ConcertFactory_With_Exlicit_Id_Check()
         {
             var expectedId = new ConcertId(Guid.NewGuid().ToString());
-            var sut = ConcertFactory.Create(expectedId, "geo", "eng", "desc", DateTime.Now.AddDays(2));
+            var sut = concertFactory.Create(expectedId, "geo", "eng", "desc", DateTime.Now.AddDays(2));
             Assert.Equal(expectedId.Value, sut.Identity);
         }
 
         [Fact]
         public void Concert_Created_Emits_ConcertCreatedEvent()
         {
-            var sut = ConcertFactory.Create("geo", "eng", "desc",
+            var sut = concertFactory.Create("geo", "eng", "desc",
                 DateTime.Now.AddDays(2)) as IHasDomainEvents;
             var actual = sut.UncommittedChanges().First();
             Assert.True(actual is ConcertCreated);
@@ -32,25 +33,25 @@ namespace EventManagement.Tests
         [Fact]
         public void Concert_With_Date_LessThanOrEqualTo_Today_Throws_Exception()
         {
-            Assert.Throws(typeof(Exception), () => ConcertFactory.Create("geo", "eng", "desc", DateTime.Now));
+            Assert.Throws(typeof(Exception), () => concertFactory.Create("geo", "eng", "desc", DateTime.Now));
         }
 
         [Fact]
         public void Concert_Construction_With_Null_Arguments_Throws_Exception()
         {
-            Assert.Throws(typeof(ArgumentException), () => ConcertFactory.Create(null, null, null, DateTime.Now.AddDays(1)));
+            Assert.Throws(typeof(ArgumentException), () => concertFactory.Create(null, null, null, DateTime.Now.AddDays(1)));
         }
 
         [Fact]
         public void Concert_Construction_With_Empty_Title_Arguments_Throws_Exception()
         {
-            Assert.Throws(typeof(ArgumentException), () => ConcertFactory.Create("", " ", "", DateTime.Now.AddDays(1)));
+            Assert.Throws(typeof(ArgumentException), () => concertFactory.Create("", " ", "", DateTime.Now.AddDays(1)));
         }
 
         [Fact]
         public void Concert_Assigned_Organizer_Success_Check()
         {
-            var sut = ConcertFactory.Create("geo", "eng", "desc",
+            var sut = concertFactory.Create("geo", "eng", "desc",
                 DateTime.Now.AddDays(2));
 
             string expected = "john";
@@ -63,7 +64,7 @@ namespace EventManagement.Tests
         [Fact]
         public void Concert_ChangeTitle_Success_Check()
         {
-            var sut = ConcertFactory.Create("geo", "eng", "desc",
+            var sut = concertFactory.Create("geo", "eng", "desc",
                 DateTime.Now.AddDays(2));
 
             string expectedGeo = "geo1";
@@ -80,7 +81,7 @@ namespace EventManagement.Tests
         [Fact]
         public void Concert_Postpone_Success_Check()
         {
-            var sut = ConcertFactory.Create("geo", "eng", "desc",
+            var sut = concertFactory.Create("geo", "eng", "desc",
                 DateTime.Now.AddDays(2));
 
             DateTime expectedDate = new DateTime(2017, 12, 01, 12, 0, 0);

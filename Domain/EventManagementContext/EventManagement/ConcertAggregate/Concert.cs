@@ -49,15 +49,6 @@ namespace EventManagement.ConcertAggregate
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
         }
 
-        public static Concert CreateFrom(ConcertSnapshot snapshot)
-        {
-            //correct this
-            return new Concert(new ConcertId(snapshot.Id.ToString()),
-                new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
-                new EventDescription(snapshot.Date, snapshot.Description)
-                );
-        }
-
         public void AssignOrganizer(string organizer)
         {
             if (string.IsNullOrEmpty(organizer))

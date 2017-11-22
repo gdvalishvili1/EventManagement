@@ -5,7 +5,11 @@ using System.Text;
 
 namespace EventManagement.Infrastructure
 {
-    public class ConcertEntity
+    public interface Idbentity
+    {
+        Guid Id { get; set; }
+    }
+    public class ConcertEntity : Idbentity
     {
         public Guid Id { get; set; }
         public DateTime Date { get; set; }
@@ -20,7 +24,7 @@ namespace EventManagement.Infrastructure
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=joni;Integrated Security=True;MultipleActiveResultSets=True");
+            optionsBuilder.UseSqlServer(@"Data Source=.\SQLEXPRESS;Initial Catalog=EventManagement;Integrated Security=True;MultipleActiveResultSets=True");
         }
     }
 }

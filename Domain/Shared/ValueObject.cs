@@ -7,10 +7,6 @@ namespace Shared.model
 {
     public abstract class ValueObject
     {
-        /// <summary>
-        /// When overriden in a derived class, returns all components of a value objects which constitute its identity.
-        /// </summary>
-        /// <returns>An ordered list of equality components.</returns>
         protected abstract IEnumerable<object> GetEqualityComponents();
 
         public override bool Equals(object obj)

@@ -8,5 +8,6 @@ namespace Infrastructure.EventStore
     {
         void Store(Event evnt);
         IEnumerable<Event> ChangesFor(string aggregateRootId);
+        T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes);
     }
 }

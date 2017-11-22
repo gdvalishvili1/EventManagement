@@ -1,39 +1,15 @@
 ﻿using Dapper;
-using EventManagement.ConcertAggregate;
-using EventManagement.ConcertSeatSummaryAggregate;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
-using Shared;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Reflection;
+using System.Text;
 
-namespace Infrastructure
+namespace Shared.Persistence
 {
-    public class PersitedObjectContainer
-    {
-        public PersitedObjectContainer(Guid id, string data, int version)
-        {
-            Id = id;
-            Data = data;
-            Version = version;
-        }
-        public Guid Id { get; }
-        public string Data { get; }
-        public int Version { get; }
-    }
-
-    public class StorageOptions
-    {
-        public string TableName { get; set; }
-        public StorageOptions(string tableName)
-        {
-            TableName = tableName;
-        }
-    }
-
     public class JsonPrivateFieldsContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
     {
         protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
@@ -47,7 +23,6 @@ namespace Infrastructure
             return props;
         }
     }
-
     public class JsonParser<T>
     {
         public string AsJson(T aggregateRoot)
@@ -73,11 +48,33 @@ namespace Infrastructure
         }
     }
 
-    public class RepositoryBase<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
+    public class PersitedObjectContainer
+    {
+        public PersitedObjectContainer(Guid id, string data, int version)
+        {
+            Id = id;
+            Data = data;
+            Version = version;
+        }
+        public Guid Id { get; }
+        public string Data { get; }
+        public int Version { get; }
+    }
+
+    public class StorageOptions
+    {
+        public string TableName { get; set; }
+        public StorageOptions(string tableName)
+        {
+            TableName = tableName;
+        }
+    }
+    public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot
     {
         private JsonParser<TAggregate> _jsonParser;
         private StorageOptions _options;
-        public RepositoryBase(JsonParser<TAggregate> jsonParser, StorageOptions options)
+
+        public JsonRepository(JsonParser<TAggregate> jsonParser, StorageOptions options)
         {
             _jsonParser = jsonParser;
             _options = options;
@@ -125,6 +122,11 @@ namespace Infrastructure
             });
         }
 
+        public void Delete(TAggregate aggregateRoot)
+        {
+            throw new NotImplementedException();
+        }
+
         private PersitedObjectContainer Get(string id)
         {
             PersitedObjectContainer result = null;
@@ -144,22 +146,6 @@ namespace Infrastructure
                 conn.Open();
                 action(conn);
             }
-        }
-    }
-
-    public class ConcertRepository : RepositoryBase<Concert>
-    {
-        public ConcertRepository(JsonParser<Concert> jsonParser, StorageOptions options)
-            : base(jsonParser, options)
-        {
-        }
-    }
-
-    public class ConcertSeatSummaryRepository : RepositoryBase<ConcertSeatSummary>
-    {
-        public ConcertSeatSummaryRepository(JsonParser<ConcertSeatSummary> jsonParser, StorageOptions options)
-            : base(jsonParser, options)
-        {
         }
     }
 }

@@ -1,8 +1,8 @@
 ﻿using EventManagement.ConcertAggregate;
-using EventManagement.ConcertSeatSummaryAggregate;
 using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Persistence;
 using EventManagement.Seat;
+using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Infrastructure;
 using Shared;
@@ -57,37 +57,30 @@ namespace ConsoleTesting
                 DateTime.Now.AddDays(12)
                 );
 
-            IConcertSeatSummaryRepository concertSeatSummaries = new JsonConcertSeatSummaryRepository(
-                new JsonParser<ConcertSeatSummary>(),
-                new StorageOptions("concertSeatSummary_tbl")
+            ISeatTypeRepository seatTypes = new JsonSeatTypeRepository(
+                new JsonParser<SeatType>(),
+                new StorageOptions("SeatTypesJson")
                 );
 
             IConcertRepository concerts = new JsonConcertRepository(
                 new JsonParser<Concert>(),
-                new StorageOptions("event_tbl")
+                new StorageOptions("ConcertsJson")
                 );
 
             concerts.Insert(concert);
 
-            var concertSeatSummary = new ConcertSeatSummary(
-                new ConcertSeatSummaryId(Guid.NewGuid().ToString()),
-                concert.Id
-                );
+            var seatTypeFirstSector = new SeatType(
+                    concert.Id,
+                    "first Sector",
+                    100,
+                    new Money("GEL", 20)
+                    );
 
-            concertSeatSummary.AddNewSeatType(
-                concertSeatSummary.CreateNewSeatType("first Sector", 100, new Money("GEL", 20))
-                );
+            seatTypes.Insert(seatTypeFirstSector);
 
-            concertSeatSummary.AddNewSeatType(
-                concertSeatSummary.CreateNewSeatType("Second Sector", 100, new Money("GEL", 10))
-                );
-
-            concertSeatSummaries.Insert(concertSeatSummary);
-
-
+            concert.AssignOrganizer("john");
             var efRepo = new EFConcertRepository(new EventContext());
             efRepo.Insert(concert);
-
 
             var concertFromEf = efRepo.ById(concert.Identity);
         }

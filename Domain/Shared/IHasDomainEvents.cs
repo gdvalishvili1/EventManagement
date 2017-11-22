@@ -6,7 +6,7 @@ namespace Shared
 {
     public interface IHasDomainEvents
     {
-        IEnumerable<DomainEvent> UncommittedChanges();
+        IReadOnlyList<DomainEvent> UncommittedChanges();
         void MarkChangesAsCommitted();
         void Emit(DomainEvent evnt);
     }

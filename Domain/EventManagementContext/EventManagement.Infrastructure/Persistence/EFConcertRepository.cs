@@ -81,7 +81,7 @@ namespace EventManagement.Infrastructure.Persistence
                 Id = snapshot.Id.AsGuid(),
                 Date = snapshot.Date,
                 Description = snapshot.Description,
-                Organizer = snapshot.Description,
+                Organizer = snapshot.Organizer,
                 TitleEng = snapshot.TitleEng,
                 TitleGeo = snapshot.TitleGeo
             });

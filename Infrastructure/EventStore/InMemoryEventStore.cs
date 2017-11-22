@@ -27,7 +27,7 @@ namespace Infrastructure.EventStore
             return Events.Where(x => x.AggregateRootId == aggregateRootId);
         }
 
-        public T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
+        public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
             where T : IEventSourcedAggregateRoot
         {
             T root = (T)Activator.CreateInstance(typeof(T), true);

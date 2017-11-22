@@ -36,6 +36,8 @@ namespace Shared
             return this.Value.Equals(id.Value);
         }
 
+        public virtual bool HasValue() => true;
+
         public override bool Equals(object anotherObject)
         {
             return Equals(anotherObject as Identity);

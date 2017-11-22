@@ -1,21 +1,20 @@
-﻿using Shared.model;
+﻿using Shared;
+using Shared.model;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.ConcertSeatSummaryAggregate
+namespace EventManagement.SeatTypeAggregate
 {
     public class SeatTypeSnapshot
     {
-        public SeatTypeSnapshot(ConcertSeatSummaryId concertSeatSummaryId, string id, string name, int quantity, Money money)
+        public SeatTypeSnapshot(Identity id, string name, int quantity, Money money)
         {
-            Id = id;
+            Id = id.Value;
             Name = name;
             Quantity = quantity;
             Price = Tuple.Create(money.Currency, money.Amount);
-            ConcertSeatSummaryId = concertSeatSummaryId.Value;
         }
-        public string ConcertSeatSummaryId { get; set; }
         public string Id { get; }
         public string Name { get; }
         public int Quantity { get; }

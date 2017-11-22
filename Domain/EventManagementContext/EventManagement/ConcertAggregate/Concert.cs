@@ -1,5 +1,4 @@
-﻿using EventManagement.ConcertSeatSummaryAggregate;
-using EventManagement.Events;
+﻿using EventManagement.Events;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
@@ -13,15 +12,10 @@ namespace EventManagement.ConcertAggregate
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
         private string Organizer { get; set; }
-        private ConcertSeatSummaryId EventSeatSummaryId { get; set; }
         public ConcertId Id { get; }
-
         public override string Identity => Id.Value;
 
-        private Concert() : base()
-        {
-
-        }
+        private Concert() : base() { }
 
         internal Concert(ConcertId id,
             EventTitleSummary eventTitle,
@@ -35,14 +29,12 @@ namespace EventManagement.ConcertAggregate
         }
 
         [JsonConstructor]
-        private Concert(ConcertId id,
+        internal Concert(ConcertId id,
             EventTitleSummary eventTitle,
             EventDescription eventDescription,
-            string organizer,
-            ConcertSeatSummaryId eventSeatSummaryId)
+            string organizer)
         {
             Organizer = organizer;
-            EventSeatSummaryId = eventSeatSummaryId;
 
             Id = id ?? throw new ArgumentNullException(nameof(id));
             EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
@@ -75,11 +67,6 @@ namespace EventManagement.ConcertAggregate
         public void Archieve()
         {
             //change publish status and etc...
-        }
-
-        public void AddEventSeatSummary(ConcertSeatSummaryId eventSeatSummary)
-        {
-            EventSeatSummaryId = eventSeatSummary ?? throw new ArgumentNullException(nameof(eventSeatSummary));
         }
 
         ConcertSnapshot IProvideSnapshot<ConcertSnapshot>.Snapshot()

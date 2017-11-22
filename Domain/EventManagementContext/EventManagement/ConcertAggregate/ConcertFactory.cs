@@ -10,6 +10,7 @@ namespace EventManagement.ConcertAggregate
     {
         TAggregate CreateFrom(Tsnapshot snapshot);
     }
+
     public class ConcertFactory : IAggregateFactory<Concert, ConcertSnapshot>
     {
         public Concert Create(string titleGeo, string titleEng, string description, DateTime concertDate)
@@ -23,10 +24,10 @@ namespace EventManagement.ConcertAggregate
         }
         public Concert CreateFrom(ConcertSnapshot snapshot)
         {
-            //correct this
             return new Concert(new ConcertId(snapshot.Id.ToString()),
                 new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
-                new EventDescription(snapshot.Date, snapshot.Description)
+                new EventDescription(snapshot.Date, snapshot.Description),
+                snapshot.Organizer
                 );
         }
         private Concert CreateInternal(string titleGeo, string titleEng, string description, DateTime concertDate, ConcertId id = null)

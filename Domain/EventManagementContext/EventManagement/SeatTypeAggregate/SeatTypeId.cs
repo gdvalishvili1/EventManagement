@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.ConcertSeatSummaryAggregate
+namespace EventManagement.SeatTypeAggregate
 {
     public class SeatTypeId : Identity
     {

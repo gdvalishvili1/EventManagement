@@ -69,7 +69,7 @@ namespace Shared.Persistence
             TableName = tableName;
         }
     }
-    public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot
+    public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
     {
         private JsonParser<TAggregate> _jsonParser;
         private StorageOptions _options;
@@ -98,7 +98,11 @@ namespace Shared.Persistence
                 using (var tran = con.BeginTransaction())
                 {
                     con.Execute($"insert into {_options.TableName} (Id,Data,Version) values ('{eventEntry.Id}','{eventEntry.Data}',{eventEntry.Version})", transaction: tran);
-                    //get aggregateroot s uncommited events and save to database using the same transaction
+
+                    foreach (var evnt in aggregateRoot.UncommittedChanges())
+                    {
+                        //insert into events table in same transaction
+                    }
                     tran.Commit();
                 }
             });

@@ -1,4 +1,4 @@
-﻿using EventManagement.ConcertSeatSummaryAggregate;
+﻿using EventManagement.SeatTypeAggregate;
 using EventManagement.Venue;
 using Shared;
 using System;

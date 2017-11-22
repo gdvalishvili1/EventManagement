@@ -23,4 +23,9 @@ namespace EventManagement.ValueObjects
             return Value.ToString();
         }
     }
+
+    public class EmptyId : Identity
+    {
+        public override bool HasValue() => false;
+    }
 }

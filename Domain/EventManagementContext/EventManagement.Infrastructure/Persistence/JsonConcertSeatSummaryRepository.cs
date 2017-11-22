@@ -1,4 +1,4 @@
-﻿using EventManagement.ConcertSeatSummaryAggregate;
+﻿using EventManagement.SeatTypeAggregate;
 using Shared.Persistence;
 using System;
 using System.Collections.Generic;
@@ -6,9 +6,9 @@ using System.Text;
 
 namespace EventManagement.Infrastructure.Persistence
 {
-    public class JsonConcertSeatSummaryRepository : JsonRepository<ConcertSeatSummary>, IConcertSeatSummaryRepository
+    public class JsonSeatTypeRepository : JsonRepository<SeatType>, ISeatTypeRepository
     {
-        public JsonConcertSeatSummaryRepository(JsonParser<ConcertSeatSummary> jsonParser, StorageOptions options)
+        public JsonSeatTypeRepository(JsonParser<SeatType> jsonParser, StorageOptions options)
             : base(jsonParser, options)
         {
         }

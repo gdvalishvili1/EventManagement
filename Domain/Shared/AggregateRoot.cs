@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
 
 namespace Shared
@@ -31,9 +32,9 @@ namespace Shared
             _version = version;
         }
 
-        IEnumerable<DomainEvent> IHasDomainEvents.UncommittedChanges()
+        IReadOnlyList<DomainEvent> IHasDomainEvents.UncommittedChanges()
         {
-            return _events;
+            return new ReadOnlyCollection<DomainEvent>(_events);
         }
 
         void IHasDomainEvents.MarkChangesAsCommitted()

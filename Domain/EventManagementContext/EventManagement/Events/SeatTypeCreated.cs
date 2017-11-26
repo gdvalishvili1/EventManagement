@@ -22,9 +22,9 @@ namespace EventManagement.Events
         public int Quantity { get; }
         public Tuple<string, decimal> Price { get; }
     }
-    public class SeatTypeAdded : DomainEvent
+    public class SeatTypeCreated : DomainEvent, ICreateEvent
     {
-        public SeatTypeAdded(SeatTypeSnapshot snapshot, ConcertId concertId, string aggregateRootId)
+        public SeatTypeCreated(SeatTypeSnapshot snapshot, ConcertId concertId, string aggregateRootId)
             : base(aggregateRootId, DateTime.Now)
         {
             Id = aggregateRootId;

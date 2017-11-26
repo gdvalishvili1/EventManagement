@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 
 namespace Shared
@@ -50,6 +51,11 @@ namespace Shared
         protected void Apply(DomainEvent evnt)
         {
             (this as IHasDomainEvents).Apply(evnt);
+        }
+
+        bool IHasDomainEvents.NewlyCreated()
+        {
+            return _events.Any(x => x is ICreateEvent);
         }
     }
 }

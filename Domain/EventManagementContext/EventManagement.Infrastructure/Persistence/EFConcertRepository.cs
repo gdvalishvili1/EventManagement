@@ -17,7 +17,7 @@ namespace EventManagement.Infrastructure.Persistence
             _db = db;
             _aggregateFactory = aggregateFactory;
         }
-        public TAggregate ById(string id)
+        public TAggregate OfId(string id)
         {
             var entity = _db.Set<TDataModel>().FirstOrDefault(x => x.Id == Guid.Parse(id));
             //return Tagg
@@ -29,7 +29,7 @@ namespace EventManagement.Infrastructure.Persistence
             throw new NotImplementedException();
         }
 
-        public void Insert(TAggregate aggregateRoot)
+        public void Store(TAggregate aggregateRoot)
         {
             throw new NotImplementedException();
         }
@@ -46,7 +46,7 @@ namespace EventManagement.Infrastructure.Persistence
         {
             _db = db;
         }
-        public Concert ById(string id)
+        public Concert OfId(string id)
         {
             var concertEntity = _db.Concerts.FirstOrDefault(x => x.Id == Guid.Parse(id));
             var rehydratedConcert = new ConcertFactory().CreateFrom(concertEntity.RehydrateCocnertSnapshot());
@@ -59,14 +59,21 @@ namespace EventManagement.Infrastructure.Persistence
             _db.SaveChanges();
         }
 
-        public void Insert(Concert aggregateRoot)
+        public void Store(Concert aggregateRoot)
         {
-            var snapshot = ConcertSnapshot.CreateFrom(aggregateRoot);
-            _db.Concerts.Add(ConcertEntity.FromConcertSnapshot(snapshot));
-            _db.SaveChanges();
+            if ((aggregateRoot as IHasDomainEvents).NewlyCreated())
+            {
+                var snapshot = ConcertSnapshot.CreateFrom(aggregateRoot);
+                _db.Concerts.Add(ConcertEntity.FromConcertSnapshot(snapshot));
+                _db.SaveChanges();
+            }
+            else
+            {
+                Update(aggregateRoot);
+            }
         }
 
-        public void Update(Concert aggregateRoot)
+        private void Update(Concert aggregateRoot)
         {
             var snapshot = ConcertSnapshot.CreateFrom(aggregateRoot);
             var concertEntity = _db.Concerts.Find(aggregateRoot.Id.AsGuid());

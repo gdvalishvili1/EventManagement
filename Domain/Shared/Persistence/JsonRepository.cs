@@ -69,6 +69,7 @@ namespace Shared.Persistence
             TableName = tableName;
         }
     }
+
     public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
     {
         private JsonParser<TAggregate> _jsonParser;
@@ -80,15 +81,28 @@ namespace Shared.Persistence
             _options = options;
         }
 
-        public TAggregate ById(string id)
+        public TAggregate OfId(string id)
         {
             var existing = Get(id);
             var aggregateRoot = _jsonParser.FromJson(existing.Data);
             aggregateRoot.SetVersion(existing.Version);
+
             return aggregateRoot;
         }
 
-        public void Insert(TAggregate aggregateRoot)
+        public void Store(TAggregate aggregateRoot)
+        {
+            if (aggregateRoot.NewlyCreated())
+            {
+                Insert(aggregateRoot);
+            }
+            else
+            {
+                Update(aggregateRoot);
+            }
+        }
+
+        private void Insert(TAggregate aggregateRoot)
         {
             var data = _jsonParser.AsJson(aggregateRoot);
             var eventEntry = new PersitedObjectContainer(Guid.Parse(aggregateRoot.Identity), data, 1);
@@ -108,7 +122,7 @@ namespace Shared.Persistence
             });
         }
 
-        public void Update(TAggregate aggregateRoot)
+        private void Update(TAggregate aggregateRoot)
         {
             var entry = Get(aggregateRoot.Identity);
             if (entry.Version != aggregateRoot.Version())

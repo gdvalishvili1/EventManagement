@@ -50,7 +50,7 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
-            Concert concert = new ConcertFactory().Create(new ConcertId("C50C68EE-26B0-450D-A7E4-FECD386D157D"),
+            Concert concert = new ConcertFactory().Create(
                 "Geo Title",
                 "Eng Title",
                 "Descirption",
@@ -67,11 +67,11 @@ namespace ConsoleTesting
                 new StorageOptions("ConcertsJson")
                 );
 
+            var aggregaterootFindResult = concerts.OfId("");
+
             var efRepo = new EFConcertRepository(new EventContext());
-            efRepo.Delete(concert);
 
-
-            concerts.Insert(concert);
+            concerts.Store(concert);
 
             var seatTypeFirstSector = new SeatType(
                     concert.Id,
@@ -80,12 +80,11 @@ namespace ConsoleTesting
                     new Money("GEL", 20)
                     );
 
-            seatTypes.Insert(seatTypeFirstSector);
+            seatTypes.Store(seatTypeFirstSector);
 
             concert.AssignOrganizer("john");
 
-
-            var concertFromEf = efRepo.ById(concert.Identity);
+            var concertFromEf = efRepo.OfId(concert.Identity);
         }
     }
 }

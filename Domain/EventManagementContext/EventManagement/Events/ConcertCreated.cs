@@ -3,7 +3,7 @@ using System;
 
 namespace EventManagement.Events
 {
-    public class ConcertCreated : DomainEvent
+    public class ConcertCreated : DomainEvent, ICreateEvent
     {
         public ConcertCreated(string aggregateRootId, string titleGe, string titleEng,
             DateTime concertDate, string description)

@@ -9,5 +9,6 @@ namespace Shared
         IReadOnlyList<DomainEvent> UncommittedChanges();
         void MarkChangesAsCommitted();
         void Apply(DomainEvent evnt);
+        bool NewlyCreated();
     }
 }

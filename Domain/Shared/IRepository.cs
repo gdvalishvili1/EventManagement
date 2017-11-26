@@ -6,9 +6,8 @@ namespace Shared
 {
     public interface IRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot
     {
-        TAggregate ById(string id);
-        void Insert(TAggregate aggregateRoot);
-        void Update(TAggregate aggregateRoot);
+        TAggregate OfId(string id);
+        void Store(TAggregate aggregateRoot);
         void Delete(TAggregate aggregateRoot);
     }
 }

@@ -1,4 +1,6 @@
-﻿using EventManagement.ConcertAggregate;
+﻿using EventManagement.Application.UseCases.CreateNewConcert;
+using EventManagement.Application.UseCases.CreateSeatType;
+using EventManagement.ConcertAggregate;
 using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Persistence;
 using EventManagement.Seat;
@@ -50,41 +52,32 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
-            Concert concert = new ConcertFactory().Create(
+            IConcertRepository concerts = new JsonConcertRepository(
+               new JsonParser<Concert>(),
+               new StorageOptions("ConcertsJson")
+               );
+
+            var createConcertCommandResult = new CreateNewConcertCommand(concerts,
                 "Geo Title",
                 "Eng Title",
                 "Descirption",
                 DateTime.Now.AddDays(12)
-                );
+                ).Execute();
+
 
             ISeatTypeRepository seatTypes = new JsonSeatTypeRepository(
                 new JsonParser<SeatType>(),
                 new StorageOptions("SeatTypesJson")
                 );
 
-            IConcertRepository concerts = new JsonConcertRepository(
-                new JsonParser<Concert>(),
-                new StorageOptions("ConcertsJson")
-                );
-
-            var aggregaterootFindResult = concerts.OfId("");
-
             var efRepo = new EFConcertRepository(new EventContext());
 
-            concerts.Store(concert);
-
-            var seatTypeFirstSector = new SeatType(
-                    concert.Id,
-                    "first Sector",
-                    100,
-                    new Money("GEL", 20)
-                    );
-
-            seatTypes.Store(seatTypeFirstSector);
-
-            concert.AssignOrganizer("john");
-
-            var concertFromEf = efRepo.OfId(concert.Identity);
+            var createSeatTypeCommanResult = new CreateSeatTypeCommand(seatTypes,
+                createConcertCommandResult.CreatedAggregateRootId.Value,
+                "first Sector",
+                100,
+                new Money("GEL", 20)
+                ).Execute();
         }
     }
 }

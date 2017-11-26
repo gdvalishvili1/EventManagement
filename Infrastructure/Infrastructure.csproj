@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Domain\EventManagementContext\EventManagement\EventManagement.csproj" />
+    <ProjectReference Include="..\Domain\EventManagementContext\EventManagement\EventManagement.Domain.csproj" />
     <ProjectReference Include="..\Domain\Shared\Shared.csproj" />
   </ItemGroup>
 

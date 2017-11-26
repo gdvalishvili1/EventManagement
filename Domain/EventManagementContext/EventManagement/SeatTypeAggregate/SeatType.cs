@@ -27,7 +27,7 @@ namespace EventManagement.SeatTypeAggregate
         {
             Construct(null, concertId, name, quantity, price);
 
-            this.Emit(new SeatTypeAdded(new SeatTypeSnapshotProvider(this).Snapshot, ConcertId, Id.Value));
+            this.Apply(new SeatTypeAdded(new SeatTypeSnapshotProvider(this).Snapshot, ConcertId, Id.Value));
         }
 
         private void Construct(SeatTypeId id, ConcertId concertId, string name, int quantity, Money price)

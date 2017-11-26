@@ -1,11 +1,7 @@
 ﻿using EventManagement.ConcertAggregate;
-using Microsoft.EntityFrameworkCore;
 using Shared;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-using EventManagement.ValueObjects;
 
 namespace EventManagement.Infrastructure.Persistence
 {
@@ -53,52 +49,28 @@ namespace EventManagement.Infrastructure.Persistence
         public Concert ById(string id)
         {
             var concertEntity = _db.Concerts.FirstOrDefault(x => x.Id == Guid.Parse(id));
-
-            var rehydratedConcert = new ConcertFactory().CreateFrom(new ConcertSnapshot
-                    (new ConcertId(concertEntity.Id.ToString()),
-                    concertEntity.Date,
-                    concertEntity.Organizer,
-                    concertEntity.Description,
-                    concertEntity.TitleGeo,
-                    concertEntity.TitleEng
-                    )
-                );
-
+            var rehydratedConcert = new ConcertFactory().CreateFrom(concertEntity.RehydrateCocnertSnapshot());
             return rehydratedConcert;
         }
 
         public void Delete(Concert aggregateRoot)
         {
-            //delete whole aggregate data model from db
+            _db.Concerts.Remove(ConcertEntity.FromConcertSnapshot(ConcertSnapshot.CreateFrom(aggregateRoot)));
+            _db.SaveChanges();
         }
 
         public void Insert(Concert aggregateRoot)
         {
-            IProvideSnapshot<ConcertSnapshot> iprovideSnapshot = aggregateRoot;
-            var snapshot = iprovideSnapshot.Snapshot();
-            _db.Concerts.Add(new ConcertEntity
-            {
-                Id = snapshot.Id.AsGuid(),
-                Date = snapshot.Date,
-                Description = snapshot.Description,
-                Organizer = snapshot.Organizer,
-                TitleEng = snapshot.TitleEng,
-                TitleGeo = snapshot.TitleGeo
-            });
+            var snapshot = ConcertSnapshot.CreateFrom(aggregateRoot);
+            _db.Concerts.Add(ConcertEntity.FromConcertSnapshot(snapshot));
             _db.SaveChanges();
         }
 
         public void Update(Concert aggregateRoot)
         {
-            IProvideSnapshot<ConcertSnapshot> iprovideSnapshot = aggregateRoot;
-            var snapshot = iprovideSnapshot.Snapshot();
+            var snapshot = ConcertSnapshot.CreateFrom(aggregateRoot);
             var concertEntity = _db.Concerts.Find(aggregateRoot.Id.AsGuid());
-            concertEntity.Date = snapshot.Date;
-            concertEntity.Description = snapshot.Description;
-            concertEntity.Organizer = snapshot.Organizer;
-            concertEntity.TitleEng = snapshot.TitleEng;
-            concertEntity.TitleGeo = snapshot.TitleGeo;
-
+            concertEntity.ModifyWithConcertSnapshot(snapshot);
             _db.SaveChanges();
         }
 

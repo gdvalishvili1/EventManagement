@@ -8,6 +8,6 @@ namespace Shared
     {
         IReadOnlyList<DomainEvent> UncommittedChanges();
         void MarkChangesAsCommitted();
-        void Emit(DomainEvent evnt);
+        void Apply(DomainEvent evnt);
     }
 }

@@ -25,7 +25,7 @@ namespace EventManagement.ConcertAggregate
             EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
 
-            this.Emit(new ConcertCreated(Id.Value, eventTitle.GeoTitle(), eventTitle.EngTitle(), EventDescription.EventDate, EventDescription.Description));
+            this.Apply(new ConcertCreated(Id.Value, eventTitle.GeoTitle(), eventTitle.EngTitle(), EventDescription.EventDate, EventDescription.Description));
         }
 
         [JsonConstructor]
@@ -50,7 +50,7 @@ namespace EventManagement.ConcertAggregate
 
             Organizer = organizer;
 
-            this.Emit(new OrganizerAssigned(Id.Value, organizer));
+            this.Apply(new OrganizerAssigned(Id.Value, organizer));
         }
 
         public void ChangeConcertTitle(string newGeoTitle, string newEngTitle)

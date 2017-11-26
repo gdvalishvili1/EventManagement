@@ -15,6 +15,7 @@ namespace OrderManagement.OrderAggregate
         {
         }
     }
+
     public class Order : EventSourcedAggregateRoot<OrderId>
     {
         public override string Identity => Id.Value;
@@ -23,7 +24,5 @@ namespace OrderManagement.OrderAggregate
         {
 
         }
-
-
     }
 }

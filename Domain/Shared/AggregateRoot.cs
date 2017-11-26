@@ -42,14 +42,14 @@ namespace Shared
             _events.Clear();
         }
 
-        void IHasDomainEvents.Emit(DomainEvent evnt)
+        void IHasDomainEvents.Apply(DomainEvent evnt)
         {
             _events.Add(evnt);
         }
 
-        protected void Emit(DomainEvent evnt)
+        protected void Apply(DomainEvent evnt)
         {
-            (this as IHasDomainEvents).Emit(evnt);
+            (this as IHasDomainEvents).Apply(evnt);
         }
     }
 }

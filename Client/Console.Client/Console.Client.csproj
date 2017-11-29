@@ -9,6 +9,7 @@
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement.Application\EventManagement.Application\EventManagement.Application.csproj" />
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement.Infrastructure\EventManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement\EventManagement.Domain.csproj" />
+    <ProjectReference Include="..\..\Domain\OrderManagementContext\OrderManagement\OrderManagement.Domain.csproj" />
     <ProjectReference Include="..\..\Infrastructure\Infrastructure.csproj" />
   </ItemGroup>
 

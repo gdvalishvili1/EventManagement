@@ -7,8 +7,7 @@ namespace EventManagement.Events
 {
     public class OrganizerAssigned : DomainEvent
     {
-        public OrganizerAssigned(string aggregateRootId, string organizer)
-            : base(aggregateRootId, DateTime.Now)
+        public OrganizerAssigned(string organizer)
         {
             Organizer = organizer;
         }

@@ -21,6 +21,10 @@ namespace Shared
         protected void ApplyChange(VersionedDomainEvent change)
         {
             _changes.Add(change);
+            change.Version = Version + 1;
+            change.AggregateRootId = Identity;
+            change.DateOccuredOn = DateTime.Now;
+            change.EventType = this.GetType().ToString();
             Version = change.Version;
             (this as IEventSourcedAggregateRoot).Apply(change);
         }
@@ -37,7 +41,11 @@ namespace Shared
 
         void IEventSourcedAggregateRoot.Apply(List<VersionedDomainEvent> changes)
         {
-            changes.ForEach(change => (this as IEventSourcedAggregateRoot).Apply(change));
+            changes.ForEach(change =>
+            {
+                (this as IEventSourcedAggregateRoot).Apply(change);
+                Version = change.Version;
+            });
         }
 
         void IEventSourcedAggregateRoot.Apply(VersionedDomainEvent change)

@@ -5,9 +5,8 @@ namespace EventManagement.Events
 {
     public class ConcertCreated : DomainEvent, ICreateEvent
     {
-        public ConcertCreated(string aggregateRootId, string titleGe, string titleEng,
+        public ConcertCreated(string titleGe, string titleEng,
             DateTime concertDate, string description)
-            : base(aggregateRootId, DateTime.Now)
         {
             TitleGe = titleGe;
             TitleEng = titleEng;

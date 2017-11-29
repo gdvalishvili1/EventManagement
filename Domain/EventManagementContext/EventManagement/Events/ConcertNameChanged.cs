@@ -5,8 +5,7 @@ namespace EventManagement.Events
 {
     public class ConcertNameChanged : DomainEvent
     {
-        public ConcertNameChanged(string aggregateRootId, string newName)
-            : base(aggregateRootId, DateTime.Now)
+        public ConcertNameChanged(string newName)
         {
             NewName = newName;
         }

@@ -7,6 +7,7 @@ using EventManagement.Seat;
 using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Infrastructure;
+using OrderManagement.OrderAggregate;
 using Shared;
 using Shared.model;
 using Shared.Persistence;
@@ -51,6 +52,8 @@ namespace ConsoleTesting
 
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
+
+            var order = new Order(new OrderId(Guid.NewGuid().ToString()), "123");
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),

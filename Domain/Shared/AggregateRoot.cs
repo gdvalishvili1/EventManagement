@@ -50,6 +50,8 @@ namespace Shared
 
         protected void Apply(DomainEvent evnt)
         {
+            evnt.AggregateRootId = Identity;
+            evnt.DateOccuredOn = DateTime.Now;
             (this as IHasDomainEvents).Apply(evnt);
         }
 

@@ -24,15 +24,12 @@ namespace EventManagement.Events
     }
     public class SeatTypeCreated : DomainEvent, ICreateEvent
     {
-        public SeatTypeCreated(SeatTypeSnapshot snapshot, ConcertId concertId, string aggregateRootId)
-            : base(aggregateRootId, DateTime.Now)
+        public SeatTypeCreated(SeatTypeSnapshot snapshot, ConcertId concertId)
         {
-            Id = aggregateRootId;
             SeatType = new SeatTypeMessage(snapshot.Id, snapshot.Name, snapshot.Quantity, snapshot.Price);
             ConcertId = concertId.Value;
         }
         public SeatTypeMessage SeatType { get; }
-        public string Id { get; }
         public string ConcertId { get; }
     }
 }

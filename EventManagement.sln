@@ -31,7 +31,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Accounts", "Domain\Accounts
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Invitations", "Domain\InvitationsContext\Invitations\Invitations.csproj", "{ACE24F34-A148-4513-8E48-E7E49A07A02F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement", "Domain\OrderManagementContext\OrderManagement\OrderManagement.csproj", "{D71A4F5F-2D5A-45D6-8EA8-1C790DF4A5CC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OrderManagement.Domain", "Domain\OrderManagementContext\OrderManagement\OrderManagement.Domain.csproj", "{D71A4F5F-2D5A-45D6-8EA8-1C790DF4A5CC}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventManagement.Application", "Domain\EventManagementContext\EventManagement.Application\EventManagement.Application\EventManagement.Application.csproj", "{1B9A153C-90D4-406A-962B-4A91821E0795}"
 EndProject

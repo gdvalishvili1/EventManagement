@@ -7,9 +7,9 @@ namespace Infrastructure.EventStore
     {
         public Event(VersionedDomainEvent evnt)
         {
-            AggregateRootId = evnt.Envilope.AggregateRootId;
-            Date = evnt.Envilope.Date;
-            EventName = evnt.Envilope.EventType;
+            AggregateRootId = evnt.AggregateRootId;
+            Date = evnt.DateOccuredOn;
+            EventName = evnt.EventType;
             Data = evnt;
         }
         public string AggregateRootId { get; }

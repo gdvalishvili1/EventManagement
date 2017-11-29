@@ -6,9 +6,10 @@ namespace Shared
 {
     public interface IEventSourcedAggregateRoot
     {
-        IEnumerable<DomainEvent> UncommittedChanges();
+        int Version { get; }
+        IEnumerable<VersionedDomainEvent> UncommittedChanges();
         void MarkChangesAsCommitted();
-        void Apply(List<DomainEvent> changes);
-        void Apply(DomainEvent change);
+        void Apply(List<VersionedDomainEvent> changes);
+        void Apply(VersionedDomainEvent change);
     }
 }

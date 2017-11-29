@@ -12,5 +12,14 @@ namespace Shared
         }
         public Envilope Envilope { get; }
     }
+
+    public abstract class VersionedDomainEvent : DomainEvent
+    {
+        public VersionedDomainEvent(string aggregateRootId, DateTime date, int aggrergateVersion) : base(aggregateRootId, date)
+        {
+            this.Version = aggrergateVersion + 1;
+        }
+        public int Version { get; set; }
+    }
 }
 

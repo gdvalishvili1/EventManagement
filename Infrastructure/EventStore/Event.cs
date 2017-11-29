@@ -5,7 +5,7 @@ namespace Infrastructure.EventStore
 {
     public class Event
     {
-        public Event(DomainEvent evnt)
+        public Event(VersionedDomainEvent evnt)
         {
             AggregateRootId = evnt.Envilope.AggregateRootId;
             Date = evnt.Envilope.Date;
@@ -16,6 +16,6 @@ namespace Infrastructure.EventStore
         public DateTime Date { get; }
         public string EventName { get; }
         public int Version { get; }
-        public DomainEvent Data { get; }
+        public VersionedDomainEvent Data { get; }
     }
 }

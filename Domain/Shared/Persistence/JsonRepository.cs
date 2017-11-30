@@ -1,6 +1,7 @@
 ﻿using Dapper;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Shared.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
@@ -10,44 +11,6 @@ using System.Text;
 
 namespace Shared.Persistence
 {
-    public class JsonPrivateFieldsContractResolver : Newtonsoft.Json.Serialization.DefaultContractResolver
-    {
-        protected override IList<JsonProperty> CreateProperties(Type type, MemberSerialization memberSerialization)
-        {
-            var props = type.GetProperties(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                            .Select(p => base.CreateProperty(p, memberSerialization))
-                        .Union(type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
-                                   .Select(f => base.CreateProperty(f, memberSerialization)))
-                        .ToList();
-            props.ForEach(p => { p.Writable = true; p.Readable = true; });
-            return props;
-        }
-    }
-    public class JsonParser<T>
-    {
-        public string AsJson(T aggregateRoot)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                ContractResolver = new JsonPrivateFieldsContractResolver(),
-                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
-            };
-            var obj = JsonConvert.SerializeObject(aggregateRoot, settings);
-            return obj;
-        }
-
-        public T FromJson(string json)
-        {
-            var settings = new JsonSerializerSettings
-            {
-                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.Auto,
-            };
-            var root = JsonConvert.DeserializeObject<T>(json, settings);
-
-            return root;
-        }
-    }
-
     public class PersitedObjectContainer
     {
         public PersitedObjectContainer(Guid id, string data, int version)

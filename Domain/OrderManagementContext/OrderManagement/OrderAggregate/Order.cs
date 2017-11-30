@@ -1,5 +1,6 @@
 ﻿using OrderManagement.Domain.OrderAggregate;
 using Shared;
+using Shared.Models.Money;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -22,9 +23,7 @@ namespace OrderManagement.OrderAggregate
         public override string Identity => Id.Value;
 
         public string ConcertId { get; private set; }
-        public OrderId Id { get; }
-
-        private decimal Total { get; set; }
+        private Money Total { get; set; }
 
         public Order(OrderId id, string concertId)
         {
@@ -37,7 +36,7 @@ namespace OrderManagement.OrderAggregate
             ConcertId = concertId;
 
             this.ApplyChange(new OrderPlaced(concertId));
-            this.ApplyChange(new OrderTotalCalculated(12));
+            this.ApplyChange(new OrderTotalCalculated(new Money("GEL", 12).ToValue()));
         }
 
         private void On(OrderPlaced orderPlaced)
@@ -47,7 +46,7 @@ namespace OrderManagement.OrderAggregate
 
         private void On(OrderTotalCalculated orderTotalCalculated)
         {
-            Total = orderTotalCalculated.Total;
+            Total = Money.From(orderTotalCalculated.Total);
         }
     }
 }

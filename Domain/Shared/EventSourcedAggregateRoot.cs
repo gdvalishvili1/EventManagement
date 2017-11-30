@@ -23,7 +23,7 @@ namespace Shared
             _changes.Add(change);
             change.Version = Version + 1;
             change.AggregateRootId = Identity;
-            change.DateOccuredOn = DateTime.Now;
+            change.OccuredOn = DateTime.Now;
             change.EventType = this.GetType().ToString();
             Version = change.Version;
             (this as IEventSourcedAggregateRoot).Apply(change);

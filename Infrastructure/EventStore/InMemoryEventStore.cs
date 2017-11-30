@@ -19,7 +19,7 @@ namespace Infrastructure.EventStore
         public void Store(Event evnt)
         {
             Events.Add(evnt);
-            _eventDispatcher.Dispatch(evnt.Data);
+            _eventDispatcher.Dispatch(evnt.Payload);
         }
 
         public IEnumerable<Event> ChangesFor(string aggregateRootId)
@@ -27,13 +27,13 @@ namespace Infrastructure.EventStore
             return Events.Where(x => x.AggregateRootId == aggregateRootId);
         }
 
-        public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
-            where T : IEventSourcedAggregateRoot
-        {
-            T root = (T)Activator.CreateInstance(typeof(T), true);
-            root.Apply(changes.Select(x => x.Data).ToList());
+        //public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
+        //    where T : IEventSourcedAggregateRoot
+        //{
+        //    T root = (T)Activator.CreateInstance(typeof(T), true);
+        //    root.Apply(changes.Select(x => x.Payload).ToList());
 
-            return root;
-        }
+        //    return root;
+        //}
     }
 }

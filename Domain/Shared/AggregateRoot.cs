@@ -51,7 +51,7 @@ namespace Shared
         protected void Apply(DomainEvent evnt)
         {
             evnt.AggregateRootId = Identity;
-            evnt.DateOccuredOn = DateTime.Now;
+            evnt.OccuredOn = DateTime.Now;
             (this as IHasDomainEvents).Apply(evnt);
         }
 

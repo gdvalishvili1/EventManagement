@@ -1,5 +1,6 @@
 ﻿using Infrastructure.EventStore;
 using Shared;
+using Shared.Json;
 using System.Collections.Generic;
 
 namespace Infrastructure.EventSourcedAggregateRoot
@@ -21,7 +22,7 @@ namespace Infrastructure.EventSourcedAggregateRoot
         {
             foreach (var uncommitedChange in _root.UncommittedChanges())
             {
-                _eventStore.Store(new EventStore.Event(uncommitedChange));
+                _eventStore.Store(Event.Build(uncommitedChange));
             }
         }
     }

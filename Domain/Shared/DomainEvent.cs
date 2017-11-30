@@ -7,7 +7,7 @@ namespace Shared
     public abstract class DomainEvent
     {
         public string AggregateRootId { get; set; }
-        public DateTime DateOccuredOn { get; set; }
+        public DateTime OccuredOn { get; set; }
         public string EventType { get; set; }
     }
 

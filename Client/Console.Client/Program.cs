@@ -1,4 +1,5 @@
-﻿using EventManagement.Application.UseCases.CreateNewConcert;
+﻿using EventManagement;
+using EventManagement.Application.UseCases.CreateNewConcert;
 using EventManagement.Application.UseCases.CreateSeatType;
 using EventManagement.ConcertAggregate;
 using EventManagement.Infrastructure;
@@ -7,9 +8,14 @@ using EventManagement.Seat;
 using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Infrastructure;
+using Infrastructure.EventDispatching;
+using Infrastructure.EventSourcedAggregateRoot;
+using Infrastructure.EventStore;
 using OrderManagement.OrderAggregate;
 using Shared;
+using Shared.Json;
 using Shared.model;
+using Shared.Models.Money;
 using Shared.Persistence;
 using System;
 using System.Collections.Generic;
@@ -53,7 +59,13 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
-            var order = new Order(new OrderId(Guid.NewGuid().ToString()), "123");
+            var order = new Order(new OrderId(), "123");
+
+            var eventDispatcher = new EventDispatcher<VersionedDomainEvent>();
+            eventDispatcher.RegisterHandlers(typeof(IEventManagementContext).Assembly);
+            var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
+
+            new StoreAggregateRootChanges(order, inMemoryEventStore).StoreChanges();
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),

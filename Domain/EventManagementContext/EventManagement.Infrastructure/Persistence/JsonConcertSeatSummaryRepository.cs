@@ -1,4 +1,5 @@
 ﻿using EventManagement.SeatTypeAggregate;
+using Shared.Json;
 using Shared.Persistence;
 using System;
 using System.Collections.Generic;

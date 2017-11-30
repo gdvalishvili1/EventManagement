@@ -7,11 +7,11 @@ namespace OrderManagement.Domain.OrderAggregate
 {
     public class OrderTotalCalculated : VersionedDomainEvent
     {
-        public OrderTotalCalculated(decimal total)
+        public OrderTotalCalculated(Tuple<string, decimal> total)
         {
             Total = total;
         }
 
-        public decimal Total { get;  }
+        public Tuple<string, decimal> Total { get; }
     }
 }

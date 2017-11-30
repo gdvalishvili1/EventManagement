@@ -1,6 +1,7 @@
 ﻿using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Shared;
+using Shared.Models.Money;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -10,7 +11,8 @@ namespace EventManagement.Application.UseCases.CreateSeatType
     public class CreateSeatTypeCommand : Command
     {
         private ISeatTypeRepository _seatTypeRepository;
-        public CreateSeatTypeCommand(ISeatTypeRepository seatTypeRepository, string concertId, string seatTypeName, int quantity, Money price)
+        public CreateSeatTypeCommand(ISeatTypeRepository seatTypeRepository, string concertId, 
+            string seatTypeName, int quantity, Money price)
         {
             _seatTypeRepository = seatTypeRepository;
             ConcertId = concertId;

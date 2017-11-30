@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.SeatTypeAggregate
+namespace Shared.Models.Money
 {
     public class Money
     {
@@ -23,6 +23,15 @@ namespace EventManagement.SeatTypeAggregate
 
             Currency = currency;
             Amount = amount;
+        }
+        public static Money From(Tuple<string, decimal> value)
+        {
+            return new Money(value.Item1, value.Item2);
+        }
+
+        public Tuple<string, decimal> ToValue()
+        {
+            return Tuple.Create(Currency, Amount);
         }
     }
 }

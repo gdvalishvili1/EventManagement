@@ -1,10 +1,8 @@
-﻿using Infrastructure.EventSourcedAggregateRoot;
-using Shared;
+﻿using Shared;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 
 namespace Infrastructure.EventStore
 {
@@ -12,7 +10,7 @@ namespace Infrastructure.EventStore
         IEventSourcedRepository<TAggregateRoot> where TAggregateRoot : IEventSourcedAggregateRoot
     {
         private string aggregateTypeName = typeof(TAggregateRoot).Name;
-        public TAggregateRoot OfId(string id)
+        public TAggregateRoot Load(string id)
         {
             using (var context = new EventStoreDbContext())
             {

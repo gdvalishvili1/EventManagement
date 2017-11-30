@@ -6,16 +6,16 @@ using System.Linq;
 
 namespace Infrastructure.EventStore
 {
-    public class InMemoryEventStore : IEventStore
+    public class InMemoryEventStore
     {
         IEventDispatcher<DomainEvent> _eventDispatcher;
+        public static List<Event> Events = new List<Event>();
 
         public InMemoryEventStore(IEventDispatcher<DomainEvent> eventDispatcher)
         {
             _eventDispatcher = eventDispatcher;
         }
 
-        public static List<Event> Events = new List<Event>();
         public void Store(Event evnt)
         {
             Events.Add(evnt);
@@ -26,14 +26,5 @@ namespace Infrastructure.EventStore
         {
             return Events.Where(x => x.AggregateRootId == Guid.Parse(aggregateRootId));
         }
-
-        //public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)
-        //    where T : IEventSourcedAggregateRoot
-        //{
-        //    T root = (T)Activator.CreateInstance(typeof(T), true);
-        //    root.Apply(changes.Select(x => x.Payload).ToList());
-
-        //    return root;
-        //}
     }
 }

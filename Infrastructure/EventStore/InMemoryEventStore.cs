@@ -24,7 +24,7 @@ namespace Infrastructure.EventStore
 
         public IEnumerable<Event> ChangesFor(string aggregateRootId)
         {
-            return Events.Where(x => x.AggregateRootId == aggregateRootId);
+            return Events.Where(x => x.AggregateRootId == Guid.Parse(aggregateRootId));
         }
 
         //public static T AggregateById<T>(string id, List<Infrastructure.EventStore.Event> changes)

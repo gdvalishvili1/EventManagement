@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace Shared
 {
-    public abstract class EventSourcedAggregateRoot<TId> : Entity, IEventSourcedAggregateRoot
+    public abstract class EventSourcedAggregateRoot<TId> : Entity, IEventSourcedAggregateRoot where TId : class, new()
     {
         private readonly Dictionary<Type, Action<VersionedDomainEvent>> _registeredEvents;
         private readonly List<VersionedDomainEvent> _changes = new List<VersionedDomainEvent>();
@@ -24,8 +24,9 @@ namespace Shared
             change.Version = Version + 1;
             change.AggregateRootId = Identity;
             change.OccuredOn = DateTime.Now;
-            change.EventType = this.GetType().ToString();
+            change.EventType = change.GetType().Name;
             Version = change.Version;
+
             (this as IEventSourcedAggregateRoot).Apply(change);
         }
 
@@ -38,14 +39,17 @@ namespace Shared
         {
             _changes.Clear();
         }
-
-        void IEventSourcedAggregateRoot.Apply(List<VersionedDomainEvent> changes)
+        protected void Load(IEnumerable<VersionedDomainEvent> history)
         {
-            changes.ForEach(change =>
+            (this as IEventSourcedAggregateRoot).Apply(history);
+        }
+        void IEventSourcedAggregateRoot.Apply(IEnumerable<VersionedDomainEvent> changes)
+        {
+            foreach (var change in changes)
             {
                 (this as IEventSourcedAggregateRoot).Apply(change);
                 Version = change.Version;
-            });
+            }
         }
 
         void IEventSourcedAggregateRoot.Apply(VersionedDomainEvent change)

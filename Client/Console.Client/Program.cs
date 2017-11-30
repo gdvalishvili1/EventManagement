@@ -11,6 +11,7 @@ using Infrastructure;
 using Infrastructure.EventDispatching;
 using Infrastructure.EventSourcedAggregateRoot;
 using Infrastructure.EventStore;
+using Newtonsoft.Json;
 using OrderManagement.OrderAggregate;
 using Shared;
 using Shared.Json;
@@ -59,13 +60,12 @@ namespace ConsoleTesting
             //var priviousEvents1 = inMemoryEventStore.ChangesFor(appliedConcert.Id.ToString());
             //var appliedConcert2 = AggregateById<Concert>(appliedConcert.Id.ToString(), priviousEvents1.ToList());
 
+
             var order = new Order(new OrderId(), "123");
 
-            var eventDispatcher = new EventDispatcher<VersionedDomainEvent>();
-            eventDispatcher.RegisterHandlers(typeof(IEventManagementContext).Assembly);
-            var inMemoryEventStore = new InMemoryEventStore(eventDispatcher);
+            var repo = new SqlEventSourcedRepository<Order>();
 
-            new StoreAggregateRootChanges(order, inMemoryEventStore).StoreChanges();
+            var order1 = repo.OfId("43ABFC31-A133-4317-AD97-6DE4DF4AD90F");
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),

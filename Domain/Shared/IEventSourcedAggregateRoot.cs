@@ -9,7 +9,7 @@ namespace Shared
         int Version { get; }
         IEnumerable<VersionedDomainEvent> UncommittedChanges();
         void MarkChangesAsCommitted();
-        void Apply(List<VersionedDomainEvent> changes);
+        void Apply(IEnumerable<VersionedDomainEvent> changes);
         void Apply(VersionedDomainEvent change);
     }
 }

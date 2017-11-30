@@ -20,10 +20,10 @@ namespace Infrastructure.EventSourcedAggregateRoot
 
         public void StoreChanges()
         {
-            foreach (var uncommitedChange in _root.UncommittedChanges())
-            {
-                _eventStore.Store(Event.Build(uncommitedChange));
-            }
+            //foreach (var uncommitedChange in _root.UncommittedChanges())
+            //{
+            //    _eventStore.Store(Event.Build(uncommitedChange));
+            //}
         }
     }
 }

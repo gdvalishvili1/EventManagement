@@ -24,6 +24,11 @@ namespace OrderManagement.OrderAggregate
 
         public string ConcertId { get; private set; }
         private Money Total { get; set; }
+        private Order(string id, IEnumerable<VersionedDomainEvent> history)
+        {
+            Id = new OrderId(id);
+            this.Load(history);
+        }
 
         public Order(OrderId id, string concertId)
         {

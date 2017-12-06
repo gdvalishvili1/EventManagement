@@ -24,6 +24,11 @@ namespace Shared.Models.Money
             Currency = currency;
             Amount = amount;
         }
+
+        public Money(decimal amount) : this("GEL", amount)
+        {
+        }
+
         public static Money From(Tuple<string, decimal> value)
         {
             return new Money(value.Item1, value.Item2);

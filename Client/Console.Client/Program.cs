@@ -5,11 +5,14 @@ using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Persistence;
 using EventManagement.SeatTypeAggregate;
 using Infrastructure.EventStore;
+using OrderManagement.Domain.OrderAggregate;
+using OrderManagement.Domain.Services;
 using OrderManagement.OrderAggregate;
 using Shared.Json;
 using Shared.Models.Money;
 using Shared.Persistence;
 using System;
+using System.Collections.Generic;
 
 namespace ConsoleTesting
 {
@@ -18,11 +21,19 @@ namespace ConsoleTesting
     {
         static void Main(string[] args)
         {
-            var order = new Order(new OrderId(), "123");
+            var items = new List<OrderItem>
+            {
+                new OrderItem("",12),
+                new OrderItem("",11)
+            };
+
+            var order = new Order(new OrderId(), "123", items, new DefaultPriceCalculator());
 
             var orders = new SqlEventSourcedRepository<Order>();
 
-            var order1 = orders.Load("43ABFC31-A133-4317-AD97-6DE4DF4AD90F");
+            orders.Store(order);
+
+            var order1 = orders.Load(order.Identity);
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),

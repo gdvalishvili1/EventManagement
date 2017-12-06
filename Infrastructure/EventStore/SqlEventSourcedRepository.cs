@@ -14,10 +14,12 @@ namespace Infrastructure.EventStore
         {
             using (var context = new EventStoreDbContext())
             {
-                var deserialized = context.Events
+                var deserialized1 = context.Events
                         .Where(x => x.AggregateRootId == Guid.Parse(id) && x.AggregateName == aggregateTypeName)
                         .OrderBy(x => x.Version)
-                        .AsEnumerable()
+                        .ToList();
+
+                var deserialized = deserialized1
                         .Select(Event.DeSerialize);
 
                 return CreateInstance(id, deserialized);
@@ -37,7 +39,7 @@ namespace Infrastructure.EventStore
 
             return (TAggregateRoot)constructor.Invoke(new object[] { id, events });
         }
-        public void Store(TAggregateRoot root, string correlationId)
+        public void Store(TAggregateRoot root)
         {
             using (var context = new EventStoreDbContext())
             {

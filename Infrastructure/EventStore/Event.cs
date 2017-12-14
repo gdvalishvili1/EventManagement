@@ -33,14 +33,10 @@ namespace Infrastructure.EventStore
             return new Event(evnt.AggregateRootId, evnt.OccuredOn, evnt.EventType, evnt.Version, aggregateName, parser.AsJson(evnt));
         }
 
-        public static VersionedDomainEvent DeSerialize(Event evnt)
+        public static VersionedDomainEvent DeSerialize(string payload)
         {
             var parser = new JsonParser<VersionedDomainEvent>();
-            var obj = parser.FromJson(evnt.Payload);
-            obj.AggregateRootId = evnt.AggregateRootId.ToString();
-            obj.Version = evnt.Version;
-            obj.OccuredOn = evnt.OccuredOn;
-            obj.EventType = evnt.EventName;
+            var obj = parser.FromJson(payload);
 
             return obj;
         }

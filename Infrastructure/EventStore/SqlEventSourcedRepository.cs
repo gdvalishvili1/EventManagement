@@ -18,13 +18,11 @@ namespace Infrastructure.EventStore
         {
             using (var context = new EventStoreDbContext())
             {
-                var deserialized1 = context.Events
+                var deserialized = context.Events
                         .Where(x => x.AggregateRootId == Guid.Parse(id) && x.AggregateName == aggregateTypeName)
                         .OrderBy(x => x.Version)
+                        .Select(x=>Event.DeSerialize(x.Payload))
                         .ToList();
-
-                var deserialized = deserialized1
-                        .Select(Event.DeSerialize);
 
                 return CreateInstance(id, deserialized);
             }

@@ -38,10 +38,10 @@ namespace EventManagement.Application.UseCases.CreateNewConcert
 
                 return new CommandExecutionResult(CommandExecutionStatus.Success, concert.Id);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 //log exception
-                return new CommandExecutionResult("concert not created");
+                return new CommandExecutionResult(ex.Message);
             }
         }
     }

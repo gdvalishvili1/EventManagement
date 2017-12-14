@@ -23,8 +23,8 @@ namespace Infrastructure.EventStore
                 connection.ConnectAsync().Wait();
 
                 var events = GetEvents(StreamName(id)).Result;
-                // var ev = events.Select(x => new Event(x.EventId.ToString(),x.)).ToList();
-                //return CreateInstance(id, allEvents.Select(x => x.OriginalEvent.));
+                var ev = events.Select(x => Event.DeSerialize(Encoding.UTF8.GetString(x.Data))).ToList();
+                return CreateInstance(id, ev);
             }
 
             throw new Exception();

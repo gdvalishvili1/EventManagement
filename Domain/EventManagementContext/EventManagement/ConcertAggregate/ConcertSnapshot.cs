@@ -8,7 +8,7 @@ namespace EventManagement.ConcertAggregate
     public class ConcertSnapshot
     {
         public Identity Id { get; set; }
-        public DateTime Date { get; set; }
+        public DateTime ConcertDate { get; set; }
         public string Organizer { get; set; }
         public string Description { get; set; }
         public string TitleGeo { get; set; }
@@ -16,7 +16,7 @@ namespace EventManagement.ConcertAggregate
         public ConcertSnapshot(Identity id, DateTime date, string organizer, string description, string titleGeo, string titleEng)
         {
             Id = id;
-            Date = date;
+            ConcertDate = date;
             Description = description;
             Organizer = organizer;
             TitleGeo = titleGeo;

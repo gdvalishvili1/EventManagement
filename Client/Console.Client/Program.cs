@@ -4,6 +4,7 @@ using EventManagement.ConcertAggregate;
 using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Persistence;
 using EventManagement.SeatTypeAggregate;
+using EventStore.ClientAPI;
 using Infrastructure.EventStore;
 using OrderManagement.Domain.OrderAggregate;
 using OrderManagement.Domain.Services;
@@ -13,6 +14,8 @@ using Shared.Models.Money;
 using Shared.Persistence;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Text;
 
 namespace ConsoleTesting
 {
@@ -29,11 +32,11 @@ namespace ConsoleTesting
 
             var order = new Order(new OrderId(), "123", items, new DefaultPriceCalculator());
 
-            var orders = new SqlEventSourcedRepository<Order>();
+            var orders = new EventStoreRepository<Order>();
 
-            orders.Store(order);
+            //orders.Store(order);
 
-            var order1 = orders.Load(order.Identity);
+            var order1 = orders.Load("22be8707-b381-4e42-81ea-398419268ea5");
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),
@@ -61,6 +64,10 @@ namespace ConsoleTesting
                 100,
                 new Money("GEL", 20)
                 ).Execute();
+
+            
+
+
         }
     }
 }

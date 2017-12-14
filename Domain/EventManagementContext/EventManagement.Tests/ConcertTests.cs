@@ -1,71 +1,83 @@
 using EventManagement.ConcertAggregate;
 using EventManagement.Events;
-using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Shared;
-using Shared.model;
+using Shared.Date;
+using Shared.UnitTest;
 using System;
-using System.Linq;
 using Xunit;
 
 namespace EventManagement.Tests
 {
-    public class ConcertTests
+    public class ConcertTests : DomainTest
     {
         ConcertFactory concertFactory = new ConcertFactory();
         [Fact]
-        public void ConcertFactory_With_Exlicit_Id_Check()
+        public void ConcertConstruction_WhenPassingConcertIdManualy_IsSameAsConcertIdentity()
         {
-            var expectedId = new ConcertId(Guid.NewGuid().ToString());
-            var sut = concertFactory.Create(expectedId, "geo", "eng", "desc", DateTime.Now.AddDays(2));
-            Assert.Equal(expectedId.Value, sut.Identity);
+            var concertId = new ConcertId(Guid.NewGuid().ToString());
+            var sut = AnonymousConcert(concertId);
+
+            Assert.Equal<string>(concertId.Value, sut.Identity);
         }
 
         [Fact]
-        public void Concert_Created_Emits_ConcertCreatedEvent()
+        public void ConcertConstruction_WhenSuccessfullyCreated_RaisesConcertCreatedEvent()
         {
-            var sut = concertFactory.Create("geo", "eng", "desc",
-                DateTime.Now.AddDays(2)) as IHasDomainEvents;
-            var actual = sut.UncommittedChanges().First();
-            Assert.True(actual is ConcertCreated);
+            var sut = AnonymousConcert();
+
+            Assert.True(RaiseSingleEventOf<ConcertCreated>(sut));
         }
 
         [Fact]
-        public void Concert_With_Date_LessThanOrEqualTo_Today_Throws_Exception()
+        public void ConcertConstruction_WhenDateIsLessThanOrEqualToToday_ThrowsException()
         {
-            Assert.Throws(typeof(Exception), () => concertFactory.Create("geo", "eng", "desc", DateTime.Now));
+            Assert.Throws(typeof(Exception),
+                () => AnonymousConcert(concertDate: DateTime.Now));
         }
 
         [Fact]
-        public void Concert_Construction_With_Null_Arguments_Throws_Exception()
+        public void ConcertConstruction_WhenNullArguments_ThrowsException()
         {
-            Assert.Throws(typeof(ArgumentException), () => concertFactory.Create(null, null, null, DateTime.Now.AddDays(1)));
+            Assert.Throws(typeof(ArgumentException), () => InValidConcert());
         }
 
         [Fact]
-        public void Concert_Construction_With_Empty_Title_Arguments_Throws_Exception()
+        public void ConcertConstruction_WhenEmptyTitleArgument_ThrowsException()
         {
-            Assert.Throws(typeof(ArgumentException), () => concertFactory.Create("", " ", "", DateTime.Now.AddDays(1)));
+            Assert.Throws(typeof(ArgumentException), () => AnonymousConcert(title: ""));
         }
 
         [Fact]
-        public void Concert_Assigned_Organizer_Success_Check()
+        public void AssignOrganizer_WhenNonEmptyOrganizer_AssignesOrganizerToConcert()
         {
-            var sut = concertFactory.Create("geo", "eng", "desc",
-                DateTime.Now.AddDays(2));
+            var sut = AnonymousConcert();
 
             string expected = "john";
 
             sut.AssignOrganizer(expected);
 
-            Assert.Equal(expected, ConcertSnapshot(sut).Organizer);
+            Assert.Equal<string>(expected, ConcertSnapshot(sut).Organizer);
         }
 
         [Fact]
-        public void Concert_ChangeTitle_Success_Check()
+        public void AssignOrganizer_WhenEmptyOrganizer_ThrowsException()
         {
-            var sut = concertFactory.Create("geo", "eng", "desc",
-                DateTime.Now.AddDays(2));
+            var sut = AnonymousConcert();
+            Assert.Throws(typeof(ArgumentException), () => sut.AssignOrganizer(""));
+        }
+
+        [Fact]
+        public void AssignOrganizer_WhenNullOrganizer_ThrowsException()
+        {
+            var sut = AnonymousConcert();
+            Assert.Throws(typeof(ArgumentException), () => sut.AssignOrganizer(null));
+        }
+
+        [Fact]
+        public void ChangeTitle_WhenNonEmptyTitles_ChangesConcertTitles()
+        {
+            var sut = AnonymousConcert();
 
             string expectedGeo = "geo1";
             string expectedEng = "eng1";
@@ -74,28 +86,53 @@ namespace EventManagement.Tests
 
             ConcertSnapshot concertSnapshot = ConcertSnapshot(sut);
 
-            Assert.Equal(expectedGeo, concertSnapshot.TitleGeo);
-            Assert.Equal(expectedEng, concertSnapshot.TitleEng);
+            Assert.Equal<string>(expectedGeo, concertSnapshot.TitleGeo);
+            Assert.Equal<string>(expectedEng, concertSnapshot.TitleEng);
         }
 
         [Fact]
-        public void Concert_Postpone_Success_Check()
+        public void Postpone_WhenFutureDate_ChangesConcertConcertDate()
         {
-            var sut = concertFactory.Create("geo", "eng", "desc",
-                DateTime.Now.AddDays(2));
+            DateTime concertDate = new DateTime(2017, 12, 05);
+            DateTime today = new DateTime(2017, 12, 01);
 
-            DateTime expectedDate = new DateTime(2017, 12, 01, 12, 0, 0);
+            DateTime expectedDate = new DateTime(2017, 12, 20);
+
+            var sut = ConcertWithCurrentDateAndConcertDate(today, concertDate);
 
             sut.Postpone(expectedDate);
 
             ConcertSnapshot concertSnapshot = ConcertSnapshot(sut);
 
-            Assert.Equal(expectedDate, concertSnapshot.Date);
+            Assert.Equal<DateTime>(expectedDate, concertSnapshot.ConcertDate);
         }
 
         private ConcertSnapshot ConcertSnapshot(IProvideSnapshot<ConcertSnapshot> concert)
         {
             return concert.Snapshot();
+        }
+
+        private Concert ConcertWithCurrentDateAndConcertDate(DateTime now, DateTime concertDate)
+        {
+            SystemDate systemDate = new SystemDate(new DateTime(2017, 12, 01));
+            var concert = concertFactory.Create("a", "b", "c",
+               concertDate, systemDate);
+
+            return concert;
+        }
+
+        private Concert AnonymousConcert(ConcertId id = null, DateTime? concertDate = null, string title = null)
+        {
+            var concert = concertFactory.Create(id ?? new ConcertId(), title ?? "a", "b", "c", concertDate ?? DateTime.Now.AddDays(2));
+
+            return concert;
+        }
+
+        private Concert InValidConcert()
+        {
+            var concert = concertFactory.Create(new ConcertId(), null, null, null, DateTime.Now.AddDays(2));
+
+            return concert;
         }
     }
 }

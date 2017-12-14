@@ -43,6 +43,11 @@ namespace OrderManagement.OrderAggregate
             this.ApplyChange(new OrderTotalCalculated(priceCalculator.Total(items).ToValue()));
         }
 
+        public OrderPlaced Place()
+        {
+            return new OrderPlaced(ConcertId, Items);
+        }
+
         private void On(OrderPlaced orderPlaced)
         {
             ConcertId = orderPlaced.ConcertId;

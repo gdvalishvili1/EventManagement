@@ -6,6 +6,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EventStore.ClientAPI.NetCore" Version="4.0.3-rc" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement.Application\EventManagement.Application\EventManagement.Application.csproj" />
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement.Infrastructure\EventManagement.Infrastructure.csproj" />
     <ProjectReference Include="..\..\Domain\EventManagementContext\EventManagement\EventManagement.Domain.csproj" />

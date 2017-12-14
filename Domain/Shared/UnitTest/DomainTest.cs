@@ -12,5 +12,10 @@ namespace Shared.UnitTest
         {
             return eventSourcedAggregateRoot.UncommittedChanges().OfType<T>().SingleOrDefault() != null;
         }
+
+        public bool RaiseSingleEventOf<T>(IHasDomainEvents aggregateRoot)
+        {
+            return aggregateRoot.UncommittedChanges().OfType<T>().SingleOrDefault() != null;
+        }
     }
 }

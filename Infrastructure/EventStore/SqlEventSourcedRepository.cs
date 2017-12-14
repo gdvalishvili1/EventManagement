@@ -1,8 +1,12 @@
-﻿using Shared;
+﻿using EventStore.ClientAPI;
+using Shared;
+using Shared.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Reflection;
+using System.Text;
 
 namespace Infrastructure.EventStore
 {

@@ -18,7 +18,7 @@ namespace EventManagement.Infrastructure
             return new ConcertEntity
             {
                 Id = snapshot.Id.AsGuid(),
-                Date = snapshot.Date,
+                Date = snapshot.ConcertDate,
                 Description = snapshot.Description,
                 Organizer = snapshot.Organizer,
                 TitleEng = snapshot.TitleEng,
@@ -41,7 +41,7 @@ namespace EventManagement.Infrastructure
 
         public void ModifyWithConcertSnapshot(ConcertSnapshot snapshot)
         {
-            this.Date = snapshot.Date;
+            this.Date = snapshot.ConcertDate;
             this.Description = snapshot.Description;
             this.Organizer = snapshot.Organizer;
             this.TitleEng = snapshot.TitleEng;

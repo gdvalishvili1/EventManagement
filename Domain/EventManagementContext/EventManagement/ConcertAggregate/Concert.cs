@@ -1,4 +1,5 @@
-﻿using EventManagement.Events;
+﻿using EventManagement.Domain.ConcertAggregate;
+using EventManagement.Events;
 using EventManagement.Seat;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
@@ -11,7 +12,7 @@ namespace EventManagement.ConcertAggregate
     {
         private EventDescription EventDescription { get; set; }
         private EventTitleSummary EventTitle { get; set; }
-        private string Organizer { get; set; }
+        private EventOrganizer Organizer { get; set; }
         public ConcertId Id { get; }
         public override string Identity => Id.Value;
 
@@ -32,7 +33,7 @@ namespace EventManagement.ConcertAggregate
         internal Concert(ConcertId id,
             EventTitleSummary eventTitle,
             EventDescription eventDescription,
-            string organizer)
+            EventOrganizer organizer)
         {
             Organizer = organizer;
 
@@ -41,14 +42,9 @@ namespace EventManagement.ConcertAggregate
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
         }
 
-        public void AssignOrganizer(string organizer)
+        public void AssignOrganizer(EventOrganizer organizer)
         {
-            if (string.IsNullOrEmpty(organizer))
-            {
-                throw new ArgumentException(nameof(organizer));
-            }
-
-            Organizer = organizer;
+            Organizer = organizer ?? throw new ArgumentNullException(nameof(organizer));
 
             this.Apply(new OrganizerAssigned(organizer));
         }
@@ -71,7 +67,7 @@ namespace EventManagement.ConcertAggregate
 
         ConcertSnapshot IProvideSnapshot<ConcertSnapshot>.Snapshot()
         {
-            return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer,
+            return new ConcertSnapshot(Id, EventDescription.EventDate, Organizer?.Name,
                 EventDescription.Description, EventTitle.GeoTitle(), EventTitle.EngTitle());
         }
     }

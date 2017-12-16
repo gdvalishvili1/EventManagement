@@ -1,4 +1,5 @@
 using EventManagement.ConcertAggregate;
+using EventManagement.Domain.ConcertAggregate;
 using EventManagement.Events;
 using EventManagement.ValueObjects;
 using Shared;
@@ -53,25 +54,25 @@ namespace EventManagement.Tests
         {
             var sut = AnonymousConcert();
 
-            string expected = "john";
+            EventOrganizer expected = new EventOrganizer("john");
 
             sut.AssignOrganizer(expected);
-
-            Assert.Equal<string>(expected, ConcertSnapshot(sut).Organizer);
+            Assert.True(ConcertSnapshot(sut).Organizer != null);
+            Assert.Equal<string>(expected.Name, ConcertSnapshot(sut).Organizer);
         }
 
         [Fact]
         public void AssignOrganizer_WhenEmptyOrganizer_ThrowsException()
         {
             var sut = AnonymousConcert();
-            Assert.Throws(typeof(ArgumentException), () => sut.AssignOrganizer(""));
+            Assert.Throws(typeof(ArgumentNullException), () => sut.AssignOrganizer(null));
         }
 
         [Fact]
         public void AssignOrganizer_WhenNullOrganizer_ThrowsException()
         {
             var sut = AnonymousConcert();
-            Assert.Throws(typeof(ArgumentException), () => sut.AssignOrganizer(null));
+            Assert.Throws(typeof(ArgumentNullException), () => sut.AssignOrganizer(null));
         }
 
         [Fact]

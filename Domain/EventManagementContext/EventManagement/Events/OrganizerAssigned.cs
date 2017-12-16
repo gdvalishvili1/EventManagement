@@ -1,4 +1,5 @@
-﻿using Shared;
+﻿using EventManagement.Domain.ConcertAggregate;
+using Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -7,9 +8,9 @@ namespace EventManagement.Events
 {
     public class OrganizerAssigned : DomainEvent
     {
-        public OrganizerAssigned(string organizer)
+        public OrganizerAssigned(EventOrganizer organizer)
         {
-            Organizer = organizer;
+            Organizer = organizer.Name;
         }
 
         public string Organizer { get; }

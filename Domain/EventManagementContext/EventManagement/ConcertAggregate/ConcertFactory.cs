@@ -1,4 +1,5 @@
-﻿using EventManagement.Entities;
+﻿using EventManagement.Domain.ConcertAggregate;
+using EventManagement.Entities;
 using EventManagement.ValueObjects;
 using Shared.Date;
 using System;
@@ -28,7 +29,7 @@ namespace EventManagement.ConcertAggregate
             return new Concert(new ConcertId(snapshot.Id.ToString()),
                 new EventTitleSummary(new GeoTitle(snapshot.TitleGeo)),
                 new EventDescription(snapshot.ConcertDate, snapshot.Description, SystemDate.Now()),
-                snapshot.Organizer
+                new EventOrganizer(snapshot.Organizer)
                 );
         }
         private Concert CreateInternal(string titleGeo, string titleEng, string description, DateTime concertDate, ConcertId id = null, ISystemDate systemDate = null)

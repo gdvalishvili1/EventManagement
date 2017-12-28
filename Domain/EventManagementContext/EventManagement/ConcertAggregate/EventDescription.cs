@@ -1,7 +1,7 @@
 ﻿using Shared.Date;
 using System;
 
-namespace EventManagement.ValueObjects
+namespace EventManagement.ConcertAggregate
 {
     internal class EventDescription
     {

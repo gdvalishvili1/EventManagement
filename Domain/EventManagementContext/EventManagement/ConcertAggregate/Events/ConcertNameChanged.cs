@@ -1,7 +1,7 @@
 ﻿using Shared;
 using System;
 
-namespace EventManagement.Events
+namespace EventManagement.Domain.ConcertAggregate.Events
 {
     public class ConcertNameChanged : DomainEvent
     {

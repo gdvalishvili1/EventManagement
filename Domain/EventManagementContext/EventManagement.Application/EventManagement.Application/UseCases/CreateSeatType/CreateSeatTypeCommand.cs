@@ -1,4 +1,5 @@
-﻿using EventManagement.SeatTypeAggregate;
+﻿using EventManagement.ConcertAggregate;
+using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Shared;
 using Shared.Models.Money;

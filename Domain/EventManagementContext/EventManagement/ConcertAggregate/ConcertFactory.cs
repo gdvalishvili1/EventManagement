@@ -1,10 +1,7 @@
 ﻿using EventManagement.Domain.ConcertAggregate;
-using EventManagement.Entities;
 using EventManagement.ValueObjects;
 using Shared.Date;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventManagement.ConcertAggregate
 {

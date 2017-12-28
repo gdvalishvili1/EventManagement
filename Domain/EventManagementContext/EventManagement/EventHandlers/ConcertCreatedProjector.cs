@@ -1,4 +1,4 @@
-﻿using EventManagement.Events;
+﻿using EventManagement.Domain.ConcertAggregate.Events;
 using System;
 
 namespace EventManagement.EventHandlers

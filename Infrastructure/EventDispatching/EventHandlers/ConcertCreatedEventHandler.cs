@@ -1,6 +1,5 @@
-﻿using EventManagement.EventHandlers;
-using EventManagement.Events;
-using Infrastructure.EventDispatching;
+﻿using EventManagement.Domain.ConcertAggregate.Events;
+using EventManagement.EventHandlers;
 
 namespace Infrastructure.EventDispatching.EventDispatchers
 {

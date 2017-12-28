@@ -1,10 +1,11 @@
-﻿using Newtonsoft.Json;
+﻿using EventManagement.ValueObjects;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace EventManagement.ValueObjects
+namespace EventManagement.ConcertAggregate
 {
     internal class EventTitleSummary
     {

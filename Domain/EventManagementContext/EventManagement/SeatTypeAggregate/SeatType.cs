@@ -1,12 +1,9 @@
-﻿using EventManagement.Events;
+﻿using EventManagement.ConcertAggregate;
 using EventManagement.ValueObjects;
 using Newtonsoft.Json;
 using Shared;
-using Shared.model;
 using Shared.Models.Money;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EventManagement.SeatTypeAggregate
 {

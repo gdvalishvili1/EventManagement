@@ -1,11 +1,12 @@
-﻿using EventManagement.SeatTypeAggregate;
+﻿using EventManagement.ConcertAggregate;
+using EventManagement.SeatTypeAggregate;
 using EventManagement.ValueObjects;
 using Shared;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.Events
+namespace EventManagement.SeatTypeAggregate
 {
     public class SeatTypeMessage
     {

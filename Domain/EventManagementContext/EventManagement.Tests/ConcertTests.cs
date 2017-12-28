@@ -1,6 +1,6 @@
 using EventManagement.ConcertAggregate;
 using EventManagement.Domain.ConcertAggregate;
-using EventManagement.Events;
+using EventManagement.Domain.ConcertAggregate.Events;
 using EventManagement.ValueObjects;
 using Shared;
 using Shared.Date;

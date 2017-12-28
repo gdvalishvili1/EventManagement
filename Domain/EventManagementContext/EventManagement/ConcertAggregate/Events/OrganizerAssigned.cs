@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace EventManagement.Events
+namespace EventManagement.Domain.ConcertAggregate.Events
 {
     public class OrganizerAssigned : DomainEvent
     {

@@ -1,5 +1,4 @@
 version: 1.0.{build}
 before_build:
 - cmd: >-
-    dotnet restore EventManagement.sln
     dotnet build EventManagement.sln

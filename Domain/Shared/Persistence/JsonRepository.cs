@@ -11,28 +11,6 @@ using System.Text;
 
 namespace Shared.Persistence
 {
-    public class PersitedObjectContainer
-    {
-        public PersitedObjectContainer(Guid id, string data, int version)
-        {
-            Id = id;
-            Data = data;
-            Version = version;
-        }
-        public Guid Id { get; }
-        public string Data { get; }
-        public int Version { get; }
-    }
-
-    public class StorageOptions
-    {
-        public string TableName { get; set; }
-        public StorageOptions(string tableName)
-        {
-            TableName = tableName;
-        }
-    }
-
     public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
     {
         private JsonParser<TAggregate> _jsonParser;

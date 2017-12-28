@@ -1,1 +1,12 @@
-version: '1.0.{build}'
+version: 1.0.{build}
+dotnet_csproj:
+  patch: true
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
+before_build:
+- cmd: >-
+    dotnet restore
+    dotnet build
+build:
+  verbosity: minimal

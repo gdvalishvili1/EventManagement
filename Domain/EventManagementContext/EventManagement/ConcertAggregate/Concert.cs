@@ -25,7 +25,11 @@ namespace EventManagement.ConcertAggregate
             EventDescription = eventDescription ?? throw new ArgumentNullException(nameof(eventDescription));
             EventTitle = eventTitle ?? throw new ArgumentNullException(nameof(eventTitle));
 
-            this.Apply(new ConcertCreated(eventTitle.GeoTitle(), eventTitle.EngTitle(), EventDescription.EventDate, EventDescription.Description));
+            this.Apply(new ConcertCreated(eventTitle.GeoTitle(),
+                eventTitle.EngTitle(),
+                EventDescription.EventDate,
+                EventDescription.Description)
+                );
         }
 
         [JsonConstructor]

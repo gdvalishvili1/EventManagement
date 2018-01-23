@@ -27,14 +27,17 @@ namespace ConsoleTesting
                 new OrderItem("",11)
             };
 
-            var order = new Order(new OrderId(), "123", items, new DefaultPriceCalculator());
+            var order = new Order(new OrderId(), "123", "userid", items, new DefaultPriceCalculator());
 
             var ordersSql = new SqlEventSourcedRepository<Order>();
             var ordersEventStore = new SqlEventSourcedRepository<Order>();
 
-            ordersEventStore.Store(order);
+            ordersSql.Store(order);
 
-            var order1 = ordersEventStore.Load("1460d73b-3ad4-4a1a-9bd8-df67802e0440");
+            var order1 = ordersSql.Load("cb9a401c-4e3d-4a51-9ec9-3dd4357125cc");
+            order1.ChangeUser("joni");
+            ordersSql.Store(order1);
+            var order2 = ordersSql.Load("");
 
             IConcertRepository concerts = new JsonConcertRepository(
                new JsonParser<Concert>(),

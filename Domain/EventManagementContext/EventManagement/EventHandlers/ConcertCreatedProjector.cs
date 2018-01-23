@@ -10,4 +10,6 @@ namespace EventManagement.EventHandlers
             Console.WriteLine($"concert registered {@event.TitleGe}");
         }
     }
+
+    
 }

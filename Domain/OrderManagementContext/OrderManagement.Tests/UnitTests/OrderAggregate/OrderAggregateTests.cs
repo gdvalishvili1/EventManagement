@@ -22,7 +22,7 @@ namespace OrderManagement.Tests.UnitTests.OrderAggregate
                 new OrderItem("",11)
             };
             var concertId = "123";
-            var order = new Order(new OrderId(), concertId, items, new DefaultPriceCalculator());
+            var order = new Order(new OrderId(), "", concertId, items, new DefaultPriceCalculator());
             return order;
         }
 

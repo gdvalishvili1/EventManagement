@@ -1,15 +1,15 @@
 ﻿using EventManagement.ConcertAggregate;
+using Infrastructure.Persistence;
 using Shared.Json;
-using Shared.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EventManagement.Infrastructure.Persistence
 {
-    public class JsonConcertRepository : JsonRepository<Concert>, IConcertRepository
+    public class JsonConcertRepository : SnapshotBasedJsonRepository<Concert, ConcertSnapshot>, IConcertRepository
     {
-        public JsonConcertRepository(JsonParser<Concert> jsonParser, StorageOptions options)
+        public JsonConcertRepository(JsonParser<ConcertSnapshot> jsonParser, StorageOptions options)
             : base(jsonParser, options)
         {
 

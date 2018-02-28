@@ -1,8 +1,10 @@
 ﻿using Shared;
 using System;
+using System.Runtime.Serialization;
 
 namespace EventManagement.Domain.ConcertAggregate.Events
 {
+    [DataContract]
     public class ConcertCreated : DomainEvent, ICreateEvent
     {
         public ConcertCreated(string titleGe, string titleEng,
@@ -14,9 +16,13 @@ namespace EventManagement.Domain.ConcertAggregate.Events
             ConcertDescription = description;
         }
 
+        [DataMember]
         public string TitleGe { get; }
+        [DataMember]
         public string TitleEng { get; }
+        [DataMember]
         public DateTime ConcertDate { get; }
+        [DataMember]
         public string ConcertDescription { get; }
     }
 

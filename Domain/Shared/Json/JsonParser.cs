@@ -15,7 +15,7 @@ namespace Shared.Json
             var settings = new JsonSerializerSettings
             {
                 ContractResolver = new JsonPrivateFieldsContractResolver(),
-                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All,
+                TypeNameHandling = Newtonsoft.Json.TypeNameHandling.All
             };
             var payload = JsonConvert.SerializeObject(obj, settings);
             return payload;

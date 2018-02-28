@@ -5,7 +5,7 @@ using System.Text;
 
 namespace EventManagement.ConcertAggregate
 {
-    public interface IConcertRepository : IRepository<Concert>
+    public interface IConcertRepository : IRepository<Concert, ConcertSnapshot>
     {
 
     }

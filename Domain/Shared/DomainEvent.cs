@@ -16,6 +16,7 @@ namespace Shared
         public string EventType { get; set; }
     }
 
+    [DataContract]
     public abstract class VersionedDomainEvent : DomainEvent
     {
         [DataMember]

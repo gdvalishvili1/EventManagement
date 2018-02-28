@@ -5,12 +5,12 @@ using EventManagement.Infrastructure;
 using EventManagement.Infrastructure.Persistence;
 using EventManagement.SeatTypeAggregate;
 using Infrastructure.EventStore;
+using Infrastructure.Persistence;
 using OrderManagement.Domain.OrderAggregate;
 using OrderManagement.Domain.Services;
 using OrderManagement.OrderAggregate;
 using Shared.Json;
 using Shared.Models.Money;
-using Shared.Persistence;
 using System;
 using System.Collections.Generic;
 
@@ -21,26 +21,26 @@ namespace ConsoleTesting
     {
         static void Main(string[] args)
         {
-            var items = new List<OrderItem>
-            {
-                new OrderItem("",12),
-                new OrderItem("",11)
-            };
+            //var items = new List<OrderItem>
+            //{
+            //    new OrderItem("",12),
+            //    new OrderItem("",11)
+            //};
 
-            var order = new Order(new OrderId(), "123", "userid", items, new DefaultPriceCalculator());
+            //var order = new Order(new OrderId(), "123", "userid", items, new DefaultPriceCalculator());
 
-            var ordersSql = new SqlEventSourcedRepository<Order>();
-            var ordersEventStore = new SqlEventSourcedRepository<Order>();
+            //var ordersSql = new SqlEventSourcedRepository<Order>();
+            //var ordersEventStore = new SqlEventSourcedRepository<Order>();
 
-            ordersSql.Store(order);
+            //ordersSql.Store(order);
 
-            var order1 = ordersSql.Load("cb9a401c-4e3d-4a51-9ec9-3dd4357125cc");
-            order1.ChangeUser("joni");
-            ordersSql.Store(order1);
-            var order2 = ordersSql.Load("");
+            //var order1 = ordersSql.Load("cb9a401c-4e3d-4a51-9ec9-3dd4357125cc");
+            //order1.ChangeUser("joni");
+            //ordersSql.Store(order1);
+            //var order2 = ordersSql.Load("");
 
             IConcertRepository concerts = new JsonConcertRepository(
-               new JsonParser<Concert>(),
+               new JsonParser<ConcertSnapshot>(),
                new StorageOptions("ConcertsJson")
                );
 
@@ -50,7 +50,6 @@ namespace ConsoleTesting
                 "Descirption",
                 DateTime.Now.AddDays(12)
                 ).Execute();
-
 
             ISeatTypeRepository seatTypes = new JsonSeatTypeRepository(
                 new JsonParser<SeatType>(),

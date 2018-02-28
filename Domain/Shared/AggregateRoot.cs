@@ -52,6 +52,7 @@ namespace Shared
         {
             evnt.AggregateRootId = Identity;
             evnt.OccuredOn = DateTime.Now;
+            evnt.EventType = evnt.GetType().Name;
             (this as IHasDomainEvents).Apply(evnt);
         }
 

@@ -26,7 +26,7 @@ namespace EventManagement.Infrastructure
             };
         }
 
-        public ConcertSnapshot RehydrateCocnertSnapshot()
+        public ConcertSnapshot RehydrateConcertSnapshot()
         {
             return new ConcertSnapshot
                     (

@@ -9,9 +9,9 @@ namespace EventManagement.ConcertAggregate
 {
     public class Concert : AggregateRoot, IProvideSnapshot<ConcertSnapshot>
     {
-        private EventDescription EventDescription { get; set; }
-        private EventTitleSummary EventTitle { get; set; }
-        private EventOrganizer Organizer { get; set; }
+        public EventDescription EventDescription { get; set; }
+        public EventTitleSummary EventTitle { get; set; }
+        public EventOrganizer Organizer { get; set; }
         public ConcertId Id { get; }
         public override string Identity => Id.Value;
 

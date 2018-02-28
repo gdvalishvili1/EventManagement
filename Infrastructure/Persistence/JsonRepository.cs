@@ -1,6 +1,8 @@
 ﻿using Dapper;
+using Infrastructure.Messaging;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Serialization;
+using Shared;
 using Shared.Json;
 using System;
 using System.Collections.Generic;
@@ -9,7 +11,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 
-namespace Shared.Persistence
+namespace Infrastructure.Persistence
 {
     public class JsonRepository<TAggregate> where TAggregate : AggregateRoot, IVersionedAggregateRoot, IHasDomainEvents
     {

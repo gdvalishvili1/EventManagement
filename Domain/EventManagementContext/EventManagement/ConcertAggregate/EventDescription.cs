@@ -3,7 +3,7 @@ using System;
 
 namespace EventManagement.ConcertAggregate
 {
-    internal class EventDescription
+    public class EventDescription
     {
         private readonly ISystemDate _systemDate;
         public EventDescription(DateTime eventDate, string description, ISystemDate systemDate)

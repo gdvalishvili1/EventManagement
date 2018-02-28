@@ -15,7 +15,7 @@ namespace EventManagement.Infrastructure.Persistence
         public Concert OfId(string id)
         {
             var concertEntity = _db.Concerts.FirstOrDefault(x => x.Id == Guid.Parse(id));
-            var rehydratedConcert = new ConcertFactory().CreateFrom(concertEntity.RehydrateCocnertSnapshot());
+            var rehydratedConcert = new ConcertFactory().CreateFrom(concertEntity.RehydrateConcertSnapshot());
             return rehydratedConcert;
         }
 

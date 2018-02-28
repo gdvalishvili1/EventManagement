@@ -7,7 +7,7 @@ using System.Text;
 
 namespace EventManagement.ConcertAggregate
 {
-    internal class EventTitleSummary
+    public class EventTitleSummary
     {
         private IList<Title> Titles { get; set; }
         public EventTitleSummary(Title title)

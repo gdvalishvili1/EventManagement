@@ -34,7 +34,7 @@ namespace ConsoleTesting
 
             //ordersSql.Store(order);
 
-            //var order1 = ordersSql.Load("cb9a401c-4e3d-4a51-9ec9-3dd4357125cc");
+            //var order1 = ordersSql.Load("FDEC6890-4EAA-440B-9A8F-A37FD57366FA");
             //order1.ChangeUser("joni");
             //ordersSql.Store(order1);
             //var order2 = ordersSql.Load("");
